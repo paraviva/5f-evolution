@@ -6,37 +6,37 @@
   },
   {
     "title": "Cloudflare",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Cloudflare_Logo.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/cloudflare.svg",
     "link": "https://cloudflare.com/"
   },
   {
     "title": "GitHub",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg",
     "link": "https://github.com/"
   },
   {
     "title": "Google SEO",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/google-2015.svg",
     "link": "https://google.com/"
   },
   {
     "title": "Next.js",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/next-js.svg",
     "link": "https://nextjs.org/"
   },
   {
     "title": "PayPal",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/paypal-7.svg",
     "link": "https://paypal.com/"
   },
   {
     "title": "Tailwind CSS",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/tailwindcss.svg",
     "link": "https://tailwindcss.com/"
   },
   {
     "title": "Vercel",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Vercel_logo_black.svg",
+    "image": "https://cdn.worldvectorlogo.com/logos/vercel.svg",
     "link": "https://vercel.com/"
   }
 ]
