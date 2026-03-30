@@ -1,30 +1,54 @@
 [
   {
-    "title": "Basic plan",
-    "tag": "Most popular",
-    "content": "One designer, 5 days a month",
-    "cta": "Start free trial",
-    "price": 999,
+    "title": "基础建站版 (Basic)",
+    "price": "*,800",
+    "tag": "Entry Level",
+    "content": "全球化合规基座，解决数字化名片从无到有的基础展示需求。",
     "services": [
-      { "item": "Access to basic services" },
-      { "item": "Basic assets and logos" },
-      { "item": "Up to 10 individual assets" },
-      { "item": "Teams/slack chat" },
-      { "item": "Cancel Anytime" }
-    ]
+      { "item": "WordPress 工业定制架构" },
+      { "item": "3 种 全球核心语种支持" },
+      { "item": "响应式 UI 交互设计" },
+      { "item": "基础 SEO 检索合规" }
+    ],
+    "cta": "获取基础版建议"
   },
   {
-    "title": "Enterprise plan",
-    "tag": "Best value",
-    "content": "One team, 5 days a month",
-    "cta": "Enquire now",
-    "price": 2999,
+    "title": "初级增长版 (Starter)",
+    "price": "25,800",
+    "tag": "Growth Focus",
+    "content": "搜索流量捕获系统，通过 SEO/GEO 联动建立初始竞争优势。",
     "services": [
-      { "item": "All basic plan services" },
-      { "item": "100 assets" },
-      { "item": "Advanced reporting and analytics" },
-      { "item": "Up to 30 individual renders" },
-      { "item": "120GB storage allowance" }
-    ]
+      { "item": "WordPress 性能增强架构" },
+      { "item": "6 种 全球主流语种支持" },
+      { "item": "核心关键词矩阵规划" },
+      { "item": "GEO 生成式引擎优化适配" }
+    ],
+    "cta": "预约工程师诊断"
+  },
+  {
+    "title": "中级系统版 (Astro Pro)",
+    "price": "38,000",
+    "tag": "Most Professional",
+    "content": "高性能数字化交付系统，极致加载速度与 5F 业务逻辑闭环。",
+    "services": [
+      { "item": "Astro + Tailwind 极速架构" },
+      { "item": "10 种 全球精准语种支持" },
+      { "item": "5F 数字化需求捕获系统" },
+      { "item": "GEO 深度权威度加码" }
+    ],
+    "cta": "获取技术方案书"
+  },
+  {
+    "title": "高级战略版 (Ultimate)",
+    "price": "68,000+",
+    "tag": "Strategic Partner",
+    "content": "全球竞争壁垒构建，针对高溢价出海企业的全链路数字化统筹。",
+    "services": [
+      { "item": "Astro 高端定制化架构" },
+      { "item": "20 种 全球全语种支持" },
+      { "item": "全球 Schema 品牌数字签名" },
+      { "item": "5F 数字化顾问年度联运" }
+    ],
+    "cta": "联系战略顾问"
   }
 ]
