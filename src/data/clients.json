@@ -1,12 +1,13 @@
 [
-  { "title": "Astro", "image": "https://cdn.simpleicons.org/astro/white", "link": "https://astro.build/" },
-  { "title": "Cloudflare", "image": "https://cdn.simpleicons.org/cloudflare/white", "link": "https://cloudflare.com/" },
-  { "title": "Gemini AI", "image": "https://cdn.simpleicons.org/googlegemini/white", "link": "https://gemini.google.com/" },
-  { "title": "GitHub", "image": "https://cdn.simpleicons.org/github/white", "link": "https://github.com/" },
-  { "title": "Google SEO", "image": "https://cdn.simpleicons.org/google/white", "link": "https://google.com/" },
-  { "title": "Next.js", "image": "https://cdn.simpleicons.org/nextdotjs/white", "link": "https://nextjs.org/" },
-  { "title": "OpenAI", "image": "https://cdn.simpleicons.org/openai/white", "link": "https://openai.com/" },
-  { "title": "PayPal", "image": "https://cdn.simpleicons.org/paypal/white", "link": "https://paypal.com/" },
-  { "title": "Tailwind", "image": "https://cdn.simpleicons.org/tailwindcss/white", "link": "https://tailwindcss.com/" },
-  { "title": "Vercel", "image": "https://cdn.simpleicons.org/vercel/white", "link": "https://vercel.com/" }
+  { "title": "Astro", "image": "https://cdn.simpleicons.org/astro", "link": "https://astro.build/" },
+  { "title": "Cloudflare", "image": "https://cdn.simpleicons.org/cloudflare", "link": "https://cloudflare.com/" },
+  { "title": "Gemini AI", "image": "https://cdn.simpleicons.org/googlegemini", "link": "https://gemini.google.com/" },
+  { "title": "GitHub", "image": "https://cdn.simpleicons.org/github", "link": "https://github.com/" },
+  { "title": "Google SEO", "image": "https://cdn.simpleicons.org/google", "link": "https://google.com/" },
+  { "title": "Next.js", "image": "https://cdn.simpleicons.org/nextdotjs", "link": "https://nextjs.org/" },
+  /* 重点：给 OpenAI 强制指定颜色，确保它能被滤镜识别 */
+  { "title": "OpenAI", "image": "https://cdn.simpleicons.org/openai/00A67E", "link": "https://openai.com/" },
+  { "title": "PayPal", "image": "https://cdn.simpleicons.org/paypal", "link": "https://paypal.com/" },
+  { "title": "Tailwind", "image": "https://cdn.simpleicons.org/tailwindcss", "link": "https://tailwindcss.com/" },
+  { "title": "Vercel", "image": "https://cdn.simpleicons.org/vercel", "link": "https://vercel.com/" }
 ]
