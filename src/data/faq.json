@@ -1,22 +1,38 @@
 [
   {
-    "question": "How secure is my design data?",
-    "answer": "We use industry-standard encryption and secure storage practices to protect your creative assets. All files are encrypted with AES-256, and our servers are regularly monitored and updated to prevent vulnerabilities."
+    "question": "独立站的服务器和域名是归我司自持吗？",
+    "answer": "核心资产必须 100% 自持。我们推荐并协助您直接在 Hostinger、Bluehost 等高性价比平台购买。所有权、管理权完全在您手中，账号密码由您掌控，彻底杜绝被建站商『绑架』或因平台限制导致资产丢失的风险。"
   },
   {
-    "question": "Is there a free trial for design services?",
-    "answer": "Yes, we offer a 14-day free trial for our design platform with access to core features for logo design, 3D modelling, or website prototyping—no credit card required."
+    "question": "相比阿里、环球资源等平台，独立站的核心优势是什么？",
+    "answer": "核心优势是『低成本、可持续』。您不再需要支付高昂的平台年费和竞价费。独立站是您的『数字房产』，流量完全私有化。通过 5F 系统构建的获客体系，能帮您跳出『不参展、不烧钱就没询盘』的困境，实现长期的获客自由。"
   },
   {
-    "question": "Can I integrate your tools with other platforms?",
-    "answer": "Absolutely. Our design tools integrate with popular platforms like Figma, Adobe Creative Cloud, Sketch, Blender, and CMS systems like WordPress and Webflow."
+    "question": "投入数字化营销后，多久能看到询盘效果？",
+    "answer": "数字化增长是系统工程。若从零开始，建站配合基础 SEO 优化通常需要 6-12 个月进入权重爆发期；GEO 智能搜索优化约需 6 个月。我们会根据您站点的实际技术情况和行业竞争度，给出真实的增长时间轴，不画大饼。"
   },
   {
-    "question": "What kind of support do you provide for design projects?",
-    "answer": "We provide 24/7 support via chat and email, along with a detailed help center full of tutorials, design best practices, and walkthroughs for each service."
+    "question": "你们的 SEO 执行计划是如何安排的？",
+    "answer": "我们按照『年度执行计划』分阶段交付：首月完成 Framework 架构搭建；第 2-4 月进行关键词深度布局与内容分区；第 6 个月进入增长爆发期。我们会按季度提供 SEO 数据报告，确保增长过程透明、可追溯。"
   },
   {
-    "question": "Do you offer offline or on-premise design tools?",
-    "answer": "Our platform is fully cloud-based for convenience and collaboration. However, you can export your designs for offline use in standard formats like SVG, OBJ, and HTML/CSS."
+    "question": "你们提供相关的运营培训服务吗？",
+    "answer": "这是我们的核心价值。我们提供阶梯式实战培训：基础版（后台操作与内容发布）、中级版（高级内容营销与 SEO 获客）、高级版（5F 系统深度应用）。目标是让您的团队具备自主造血能力，不再长期依赖外部代运营。"
+  },
+  {
+    "question": "你们如何保证网站在海外的打开速度？",
+    "answer": "我们采用全球 CDN 加速和轻量化代码架构。无论您的客户是在德国、美国还是中东，网站都能实现『秒开』，确保产品图纸和技术手册能瞬间展示，不错过任何一个潜在询盘。"
+  },
+  {
+    "question": "合同中提到的『基础代运营』具体包含什么？",
+    "answer": "代运营旨在帮企业平稳度过冷启动期。包含每月的核心关键词监测、基础内容更新辅助及年度 SEO 策略对齐。我们不是简单的代发文章，而是深度参与您的获客架构调整，直到您的团队能够完全接手运营。"
+  },
+  {
+    "question": "如果目前外贸只靠展会，这个系统能帮到我什么？",
+    "answer": "我们将展会的短期爆发转化为线上的长期曝光。通过搭建 5F 获客框架，建立起一套 24 小时在线的『数字业务员』体系。即使在展会淡季，也能通过独立站、LinkedIn 等渠道持续获取高毛利订单，大幅降低单笔获客成本。"
+  },
+  {
+    "question": "如何保障合作过程中的商业机密和客户数据？",
+    "answer": "我们在正式合同中设有专项保密条款。无论是您的技术资料、产品图纸还是询盘数据，我们均负有法律约束下的保密义务。未经书面同意，绝不向任何第三方泄露，确保企业核心竞争力的绝对安全。"
   }
 ]
