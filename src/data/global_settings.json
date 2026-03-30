@@ -1,57 +1,44 @@
 {
-  "title": "blackspike astro landing page",
-  "description": "A free Astro landing theme made with Tailwind",
+  "title": "ECHO 5F TRADING DIGITAL GROWTH",
+  "description": "From Signal to System",
   "social_image": "/1200x630.jpg",
-  "base_url": "https://astro-theme.blackspike.com",
+  "base_url": "https://www.5fgeo.com",
   "demo": {
-    "title": "Need design?",
-    "content": "<strong>Get a guided tour through our services</strong>, and find out how you and your team can change the way you work, forever.",
-    "cta": "Book a call"
+    "title": "获取您的增长方案",
+    "content": "<strong>预约一次 5F 系统深度拆解</strong>，了解如何为您定制低成本、可持续的数字化外贸获客体系。",
+    "cta": "立即发起咨询"
   },
   "theme_color": "#18181b",
   "nav": [
     {
-      "title": "Services",
+      "title": "增长方案",
       "link": "/#services"
     },
     {
-      "title": "Case studies",
+      "title": "实战案例",
       "link": "/#case-studies"
     },
     {
-      "title": "Pricing",
+      "title": "服务价格",
       "link": "/#pricing"
     },
     {
-      "title": "FAQ",
+      "title": "常见问题",
       "link": "/#faq"
-    },
-    {
-      "title": "Newsletter",
-      "link": "/#newsletter"
     }
   ],
-
   "social_links": [
     {
-      "title": "Twitter / X",
-      "link": "https://x.com/blackspikeltd/"
+      "title": "LinkedIn",
+      "link": "https://www.linkedin.com/in/socksindustry/"
     },
     {
-      "title": "Mastodon",
-      "link": "https://mastodon.cloud/@blackspike"
+      "title": "Redbook",
+      "link": "https://xhslink.com/m/ok3CfBxSKi"
     },
     {
       "title": "GitHub",
-      "link": "https://github.com/blackspike/"
-    },
-    {
-      "title": "LinkedIn",
-      "link": "https://www.linkedin.com/company/blackspike"
-    },
-    {
-      "title": "Bluesky",
-      "link": "https://bsky.app/profile/blackspike.com/"
+      "link": "https://github.com/paraviva"
     }
   ]
 }
