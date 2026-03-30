@@ -1,84 +1,98 @@
 ---
+// 1. 导入图标 (请确保文件名与 src/assets/theme-images/ 下一致)
+import xiaohongshuIcon from "../assets/theme-images/xiaohongshu.svg?url";
+import tiktokIcon from "../assets/theme-images/tiktok.svg?url";
 
-import Logo from '../assets/theme-images/logo.svg'
+const currentYear = new Date().getFullYear();
+const contactEmail = "info@5fgeo.com"; // 修正后的邮箱
 
-const { settings } = Astro.props
-
+const socialLinks = [
+  {
+    name: "小红书",
+    // 已更换为您提供的新短链接
+    url: "https://xhslink.com/m/ok3CfBxSKi", 
+    icon: xiaohongshuIcon
+  },
+  {
+    name: "抖音",
+    url: "https://v.douyin.com/8_h0aGbr3Iw/",
+    icon: tiktokIcon
+  }
+];
 ---
 
-<footer class="@container bs-container my-24 font-semibold text-bs-foreground-dark [&_a]:hover:text-bs-foreground-light [&_a]:transition-color [&_a]:duration-150" id="contact">
-
-  <!-- Wrapper -->
-  <div class="bg-bs-surface-2 p-6 md:p-16 rounded-xl grid md:grid-cols-2 gap-8">
-
-      <!-- Left col -->
-      <div class="w-max flex flex-col gap-8 md:gap-0 justify-between text-bs-foreground-light">
-
-        <!-- Logo -->
-        <a class="flex group" href="#top" aria-label="Back to top">
-
-          <Logo class="group-hover:-rotate-180 group-hover:scale-80 transition-transform ease-bs-spring duration-1000" height="48" width="48" />
-
+<footer class="bg-black py-20 border-t border-white/10 mt-20 text-white font-sans relative">
+  <div class="bs-container">
+    <div class="flex flex-col lg:flex-row justify-between items-start gap-16">
+      
+      <div class="flex flex-col gap-6 max-w-sm">
+        <a href="/" class="text-3xl font-black tracking-tighter text-white hover:opacity-80 transition-opacity">
+           ECHO 5F<span class="text-white">.</span>
         </a>
-
-        <!-- CTA title -->
-        <h2 class="bs-h3">{ settings.demo.title  }</h2>
-
-        <!-- CTA Button -->
-        <button type="button" class="min-w-32 bs-btn block bg-bs-surface-3" onclick="demo.showModal()">
-          { settings.demo.cta }
-        </button>
-
+        <p class="text-white text-sm leading-relaxed tracking-[0.2em] uppercase font-light">
+          From Signal to System.
+        </p>
       </div>
 
-      <!-- Right col -->
-      <div class="flex gap-10 md:gap-2 lg:gap-20 md:justify-end [&_a]:block md:[&_a]:px-5 [&_a]:py-2">
-
-        <!-- Nav -->
-        <nav class="flex flex-col">
-
-          { settings.nav.sort((a,b) => a.title.localeCompare(b.title)).map( item =>
-
-            <a href={ item.link }>
-              { item.title }
+      <div class="flex flex-col gap-8">
+        <h4 class="font-bold tracking-[0.3em] text-[10px] uppercase text-white italic">Brand Social</h4>
+        <div class="flex gap-12">
+          {socialLinks.map(({ name, url, icon }) => (
+            <a href={url} target="_blank" class="group flex flex-col gap-3">
+              <div class="flex items-center gap-3 text-white">
+                <img 
+                  src={icon} 
+                  alt={name} 
+                  class="w-6 h-6 object-contain brightness-0 invert transition-transform group-hover:scale-110" 
+                />
+                <span class="text-sm font-bold tracking-tight">{name}</span>
+              </div>
             </a>
-
-          )}
-
-        </nav>
-
-        <!-- Social links -->
-        <nav class="flex flex-col">
-
-          { settings.social_links.sort((a,b) => a.title.localeCompare(b.title)).map( item =>
-
-            <a href={ item.link }>
-              { item.title }
-            </a>
-
-          )}
-
-        </nav>
-
+          ))}
+        </div>
       </div>
 
+      <div class="flex flex-col gap-8 text-white">
+        <h4 class="font-bold tracking-[0.3em] text-[10px] uppercase text-white italic">Contact</h4>
+        <div class="flex flex-col gap-4">
+          <a href={`mailto:${contactEmail}`} class="text-sm border-b border-white/20 hover:border-white transition-all py-1">
+            {contactEmail}
+          </a>
+          </div>
+      </div>
+
+    </div>
+
+    <div class="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-[9px] tracking-[0.5em] text-white text-center md:text-left uppercase font-light">
+        © {currentYear} ECHO 5F. ALL RIGHTS RESERVED.
+      </div>
+
+      <button 
+        id="back-to-top" 
+        class="group flex items-center gap-3 text-white/50 hover:text-white transition-colors cursor-pointer"
+        aria-label="Back to top"
+      >
+        <span class="text-[9px] tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-opacity">TOP</span>
+        <div class="p-3 border border-white/10 group-hover:border-white/30 rounded-full transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform group-hover:-translate-y-1">
+                <path d="m18 15-6-6-6 6"/>
+            </svg>
+        </div>
+      </button>
+    </div>
   </div>
-
-
-  <!-- Colophon -->
-  <aside class="bs-container">
-
-      <nav class="flex gap-4 justify-center pt-16 md:pt-24 text-xs">
-
-        <!-- Copyright/Date -->
-        <a href="https://blackspike.com/">by blackspike.com</a>
-
-        <!-- Credits -->
-        <a href="/credits">about / credits</a>
-
-      </nav>
-
-  </aside>
-
 </footer>
 
+<script>
+  // 处理回到顶部点击事件
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // 平滑滚动
+      });
+    });
+  }
+</script>
