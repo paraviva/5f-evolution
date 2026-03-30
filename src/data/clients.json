@@ -4,9 +4,8 @@
   { "title": "Gemini AI", "image": "https://cdn.simpleicons.org/googlegemini", "link": "https://gemini.google.com/" },
   { "title": "GitHub", "image": "https://cdn.simpleicons.org/github", "link": "https://github.com/" },
   { "title": "Google SEO", "image": "https://cdn.simpleicons.org/google", "link": "https://google.com/" },
+  { "title": "Meta", "image": "https://cdn.simpleicons.org/meta", "link": "https://about.meta.com/" },
   { "title": "Next.js", "image": "https://cdn.simpleicons.org/nextdotjs", "link": "https://nextjs.org/" },
-  /* 重点：给 OpenAI 强制指定颜色，确保它能被滤镜识别 */
-  { "title": "OpenAI", "image": "https://cdn.simpleicons.org/openai/00A67E", "link": "https://openai.com/" },
   { "title": "PayPal", "image": "https://cdn.simpleicons.org/paypal", "link": "https://paypal.com/" },
   { "title": "Tailwind", "image": "https://cdn.simpleicons.org/tailwindcss", "link": "https://tailwindcss.com/" },
   { "title": "Vercel", "image": "https://cdn.simpleicons.org/vercel", "link": "https://vercel.com/" }
