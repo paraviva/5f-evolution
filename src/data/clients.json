@@ -1,42 +1,42 @@
 [
   {
     "title": "Astro",
-    "image": "https://astro.build/assets/press/astro-logo-light-gradient.svg",
+    "image": "https://cdn.simpleicons.org/astro/white",
     "link": "https://astro.build/"
   },
   {
     "title": "Cloudflare",
-    "image": "https://cdn.worldvectorlogo.com/logos/cloudflare.svg",
+    "image": "https://cdn.simpleicons.org/cloudflare/white",
     "link": "https://cloudflare.com/"
   },
   {
     "title": "GitHub",
-    "image": "https://cdn.worldvectorlogo.com/logos/github-icon-1.svg",
+    "image": "https://cdn.simpleicons.org/github/white",
     "link": "https://github.com/"
   },
   {
     "title": "Google SEO",
-    "image": "https://cdn.worldvectorlogo.com/logos/google-2015.svg",
+    "image": "https://cdn.simpleicons.org/google/white",
     "link": "https://google.com/"
   },
   {
     "title": "Next.js",
-    "image": "https://cdn.worldvectorlogo.com/logos/next-js.svg",
+    "image": "https://cdn.simpleicons.org/nextdotjs/white",
     "link": "https://nextjs.org/"
   },
   {
     "title": "PayPal",
-    "image": "https://cdn.worldvectorlogo.com/logos/paypal-7.svg",
+    "image": "https://cdn.simpleicons.org/paypal/white",
     "link": "https://paypal.com/"
   },
   {
     "title": "Tailwind CSS",
-    "image": "https://cdn.worldvectorlogo.com/logos/tailwindcss.svg",
+    "image": "https://cdn.simpleicons.org/tailwindcss/white",
     "link": "https://tailwindcss.com/"
   },
   {
     "title": "Vercel",
-    "image": "https://cdn.worldvectorlogo.com/logos/vercel.svg",
+    "image": "https://cdn.simpleicons.org/vercel/white",
     "link": "https://vercel.com/"
   }
 ]
