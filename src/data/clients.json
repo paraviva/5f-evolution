@@ -5,38 +5,38 @@
     "link": "https://astro.build/"
   },
   {
-    "title": "WordPress",
-    "image": "https://s.w.org/style/images/about/WordPress-logotype-wmark.png",
-    "link": "https://wordpress.org/"
-  },
-  {
-    "title": "Tailwind CSS",
-    "image": "https://v1.tailwindcss.com/img/tailwind_logo.svg",
-    "link": "https://tailwindcss.com/"
-  },
-  {
-    "title": "Next.js",
-    "image": "https://cdn.worldvectorlogo.com/logos/next-js.svg",
-    "link": "https://nextjs.org/"
-  },
-  {
-    "title": "Google SEO",
-    "image": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png",
-    "link": "https://google.com/"
-  },
-  {
     "title": "Cloudflare",
-    "image": "https://www.vectorlogo.zone/logos/cloudflare/cloudflare-ar21.svg",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/94/Cloudflare_Logo.svg",
     "link": "https://cloudflare.com/"
   },
   {
-    "title": "Vercel",
-    "image": "https://v1.tailwindcss.com/img/vercel_logo.svg",
-    "link": "https://vercel.com/"
+    "title": "GitHub",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
+    "link": "https://github.com/"
   },
   {
-    "title": "React",
-    "image": "https://cdn.worldvectorlogo.com/logos/react-2.svg",
-    "link": "https://react.dev/"
+    "title": "Google SEO",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+    "link": "https://google.com/"
+  },
+  {
+    "title": "Next.js",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg",
+    "link": "https://nextjs.org/"
+  },
+  {
+    "title": "PayPal",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
+    "link": "https://paypal.com/"
+  },
+  {
+    "title": "Tailwind CSS",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+    "link": "https://tailwindcss.com/"
+  },
+  {
+    "title": "Vercel",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Vercel_logo_black.svg",
+    "link": "https://vercel.com/"
   }
 ]
