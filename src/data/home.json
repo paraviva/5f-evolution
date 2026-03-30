@@ -1,14 +1,14 @@
 {
-  "hero_title": "blackspike astro landing page",
-  "hero_content": "<p><strong>A free Astro landing theme made with Tailwind</strong> to help kick start your Astro website.</p><p>Uses modern CSS and HTML features for added zip, plus a slick swiper carousel. All in Astro JSX.</p>",
-  "services_title": "Our services",
-  "clients_title": "Trusted by some great companies",
-  "testimonials_title": "Clients ♥ us",
-  "case_studies_title": "Case studies",
-  "pricing_title": "We do design retainers",
-  "quote_content": "This <strong>design agency</strong> is a <strong>game changer</strong>. Its <strong>creative vision</strong>, <strong>user-focused approach</strong>, and <strong>seamless collaboration</strong> have <strong>transformed</strong> the way we <strong>build our brand</strong>. It’s <strong>not just an agency</strong> — it’s a <strong>powerful partner</strong> that <strong>delivers real results</strong>.",
-  "quote_cite": "Sean Higgins",
-  "quote_role": "CTO, Interia",
+  "hero_title": "ECHO 5F DIGITAL EVOLUTION",
+  "hero_content": "<p><strong>基于 5F 架构的工业级增长系统。</strong> 我们通过 Framework, Flow, Figures, Focus, 以及 Future (AI) 重新定义 B2B 企业的数字化出海链路。</p><p>从信号到系统，让每一分投入都具备确定性的增长逻辑。</p>",
+  "services_title": "5F 核心能力矩阵",
+  "clients_title": "深耕工业领域，助力头部制造",
+  "testimonials_title": "合作伙伴评价",
+  "case_studies_title": "增长实战案例",
+  "pricing_title": "5F 数字化增长方案",
+  "quote_content": "5F 模型不是某种营销玄学，它是<strong>工业级的增长规律</strong>。其<strong>严密的逻辑框架</strong>、<strong>对数据的极致聚焦</strong>以及<strong>无缝的执行协作</strong>，彻底改变了我们<strong>构建品牌</strong>的方式。它不仅是一个顾问团队，更是一个<strong>持续交付增长结果</strong>的系统伙伴。",
+  "quote_cite": "JIANG NAN",
+  "quote_role": "FOUNDER OF 5F EVOLUTION",
   "quote_image": "/content-images/quote-man.avif",
-  "faq_title": "Frequently Asked Questions"
+  "faq_title": "常见问题解答 (FAQ)"
 }
