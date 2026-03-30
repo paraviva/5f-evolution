@@ -10,6 +10,11 @@
     "link": "https://cloudflare.com/"
   },
   {
+    "title": "Gemini (Google AI)",
+    "image": "https://cdn.simpleicons.org/googlegemini/white",
+    "link": "https://gemini.google.com/"
+  },
+  {
     "title": "GitHub",
     "image": "https://cdn.simpleicons.org/github/white",
     "link": "https://github.com/"
@@ -23,6 +28,11 @@
     "title": "Next.js",
     "image": "https://cdn.simpleicons.org/nextdotjs/white",
     "link": "https://nextjs.org/"
+  },
+  {
+    "title": "OpenAI (ChatGPT)",
+    "image": "https://cdn.simpleicons.org/openai/white",
+    "link": "https://openai.com/"
   },
   {
     "title": "PayPal",
