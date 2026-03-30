@@ -1,89 +1,99 @@
 ---
-
 import Check from '../assets/theme-images/icon-check.svg'
 import Cube from '../assets/theme-images/icon-cube.svg'
 import CubeOutline from '../assets/theme-images/icon-cube-outline.svg'
 
 const { title, pricing } = Astro.props
-
 ---
 
 <section class="bs-container bs-mt-lg" id="pricing">
 
-  <!-- Header -->
-  { title && <h2 class="bs-h2 text-center">{ title }</h2>}
+  { title && <h2 class="bs-h2 text-center text-white">{ title }</h2>}
 
-  <!-- pricing -->
-  <div class="mt-8 grid lg:grid-cols-2 gap-8 lg:gap-0">
-
-    <!-- Item -->
+  <div class="mt-12 grid lg:grid-cols-2 gap-8 lg:gap-6">
 
     { pricing.map( ( item, index ) =>
-
+    
     <article
-      class:list={['@container p-6 xl:p-16 flex flex-col gap-6 h-full w-full rounded-xl overflow-hidden lg:scale-90 @xl:justify-end', index === 1 ? 'bg-white/90 text-black/90 lg:scale-none' : 'bg-bs-surface-0/90']}>
+      class:list={[
+        '@container p-8 xl:p-16 flex flex-col gap-6 h-full w-full rounded-2xl overflow-hidden transition-all duration-500 border border-white/5',
+        index === 2 ? 'bg-white text-black lg:scale-105 z-10 shadow-2xl' : 'bg-bs-surface-0/90 text-white opacity-90 hover:opacity-100'
+      ]}>
 
-      <!-- Content -->
-      <div class="relative">
+      <div class="relative flex flex-col h-full">
 
-        <!-- Title -->
-        <h2 class="bs-h3 flex gap-3 items-center">
+        <header class="flex justify-between items-start mb-4">
+          <div class="flex gap-3 items-center">
+            { (index === 2 || index === 3) ? <Cube height="28" width="28" /> : <CubeOutline height="28" width="28" /> }
+            <h3 class="text-2xl font-display font-bold italic tracking-tight uppercase">{ item.title }</h3>
+          </div>
+          <span class:list={["text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-1 rounded-full border", index === 2 ? "border-black/20 text-black/60" : "border-white/20 text-white/40"]}>
+            { item.tag }
+          </span>
+        </header>
 
-          <!-- Icon -->
-          { index === 1 && <Cube height="32" width="32" />  }
-          { index !== 1 && <CubeOutline height="32" width="32" />  }
+        <p class:list={["text-lg leading-relaxed mb-8", index === 2 ? "text-black/70" : "text-white/60"]} set:html={ item.content } />
 
-          <!-- Title -->
-          <span>{ item.title }</span>
-
-          <!-- Tag -->
-          <div
-            class="text-xs uppercase tracking-widest font-semibold hidden sm:block ms-auto rounded-full px-4 py-2 pb-[0.4rem] border border-bs-foreground-dark/30"
-            set:html={ item.tag } />
-
-        </h2>
-
-        <!-- Intro -->
-        <div class="text-xl grow mt-4 " set:html={ item.content } />
-
-        <!-- Services list -->
-        <ul role="list" class="flex flex-col gap-4 my-8">
-
-          { item.services.map( ({ item }) =>
-
-            <li class="flex gap-2 md:gap-3 items-center">
-
-              <!-- Check -->
-              <Check height="24" width="24" />
-
-              <!-- Item -->
-              <span class="text-xl">{ item }</span>
-
+        <ul role="list" class="flex flex-col gap-5 grow mb-12">
+          { item.services.map( (service) =>
+            <li class="flex gap-3 items-start group">
+              <div class:list={["mt-1 opacity-60", index === 2 ? "text-black" : "text-white"]}>
+                <Check height="20" width="20" />
+              </div>
+              <span class="text-lg font-medium tracking-tight opacity-90">{ service.item }</span>
             </li>
-
           )}
-
         </ul>
 
-        <!-- CTA -->
-        <footer class="flex justify-between items-center gap-2">
+        <footer class="flex flex-col @md:flex-row @md:items-end justify-between gap-6 pt-8 border-t border-current/10">
+          
+          <div class="flex flex-col gap-1">
+            { index === 0 ? (
+              // 仅第一项显示具体价格
+              <div class="flex items-baseline gap-1">
+                <span class="text-xs font-bold opacity-50">FROM</span>
+                <span class="text-5xl font-mono tracking-tighter">¥{ item.price }</span>
+                <span class="text-sm opacity-50 font-bold">*</span>
+              </div>
+            ) : (
+              // 其他项显示“经诊断报价”
+              <div class="flex flex-col">
+                <span class="text-3xl font-bold tracking-tight italic">根据诊断报价</span>
+                <span class="text-[10px] uppercase tracking-widest opacity-40 mt-1 font-bold">Project Diagnosis Required</span>
+              </div>
+            )}
+            <p class="text-[10px] opacity-40 mt-2 font-medium">不含服务器与域名成本,若使用AI，不含Token成本</p>
+          </div>
 
-          <!-- Price -->
-          <span class="text-4xl lg:text-5xl">£{ item.price }<span class="text-2xl hidden @md:inline-block -translate-y-1 ms-2"> / month</span></span>
-
-          <!-- CTA button -->
-          <button type="button" class="bs-btn inline-block self-start @4xl:mt-12 text-xl" onclick="demo.showModal()">
+          <button 
+            type="button" 
+            class:list={[
+              "bs-btn px-8 py-4 text-lg font-bold transition-all active:scale-95",
+              index === 2 ? "bg-black text-white hover:bg-black/80" : "bg-white text-black hover:bg-gray-200"
+            ]}
+            onclick="demo.showModal()"
+          >
             { item.cta }
           </button>
-
         </footer>
 
       </div>
-
     </article>
     )}
 
   </div>
 
+  <div class="mt-12 text-center px-4 max-w-2xl mx-auto opacity-30">
+    <p class="text-[10px] uppercase tracking-[0.3em] font-medium leading-loose text-white">
+      * 以上方案为 5F 系统标准化基准。最终交付成本需经 **数字化工程师** 进行业务分析与需求诊断后，出具技术方案书确定。
+    </p>
+  </div>
+
 </section>
 
+<style>
+  /* 针对中级方案 Astro Pro (Index 2) 的特殊强调效果 */
+  article:nth-child(3) {
+    box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.1);
+  }
+</style>
