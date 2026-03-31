@@ -1,32 +1,32 @@
 [
   {
-    "title": "Powering Growth.<br>Simplifying Success.",
-    "sector": "Web design",
-    "content": "<strong>Our custom web design solution helped Biotechlet Ltd elevate its digital presence with a clean, modern interface and intuitive user experience. </strong> <br><br>The redesigned site streamlined user journeys, improved accessibility, and strengthened brand credibility.",
-    "case_study_link": "https://www.spike.news",
-    "cta": "Visit spike.news",
+    "title": "驱动增长<br>简化成功的路径",
+    "sector": "B2B 数字化架构",
+    "content": "<strong>通过定制化的数字化 Listing 架构，我们帮助企业重塑了其全球产品资产的呈现方式。</strong> <br><br>通过 5F 矩阵中的 Figures（数据规范化）模块，该方案优化了超过 10,000 个全球产品触点，真正将分散的产品数据转化为企业的核心获客资产。",
+    "case_study_link": "#",
+    "cta": "联系我们查看案例",
     "image": "/content-images/spike.news.avif",
-    "image_alt": "iPad showing spike.news website",
+    "image_alt": "平板显示的数字化产品列表视图",
     "bg": "bg-gradient-to-r from-indigo-500 to-purple-600"
   },
   {
-    "title": "Accelerating Innovation.<br>Empowering Results.",
-    "sector": "Development",
-    "content": "Our dynamic design and build simplified productivity, delivering automated solutions, seamless collaboration, and data-driven insights",
-    "case_study_link": "https://pixels.blackspike.com/",
-    "cta": "Visit pixels",
+    "title": "全球需求地图锚定<br>构建点线面获客网络",
+    "sector": "工业赛道 / 流量网",
+    "content": "<strong>尊重客观规律，拒绝盲目投入。我们将孤立的获客触点连成线，编织成覆盖全球的流量“渔网”。</strong> <br><br>基于 5F 的 Flow（流量溢出）逻辑，通过这种点阵式网络架构，我们在 6 个月内实现了核心关键词流量的阶梯式爬升，验证了逻辑的确定性。",
+    "case_study_link": "#",
+    "cta": "联系我们查看案例",
     "image": "/content-images/pixelate.pictures.avif",
-    "image_alt": "iPad showing pixelated wave painting",
+    "image_alt": "平板显示的抽象点阵获客网络图",
     "bg": "bg-gradient-to-r from-fuchsia-500 to-cyan-500"
   },
   {
-    "title": "Enhance productivity,<br>boost efficiency.",
-    "sector": "3D Design",
-    "content": "Create, collaborate, and render — all in one streamlined workflow. Teams are connected and producing stunning visuals in minutes.",
-    "case_study_link": "https://www.brighton.dog",
-    "cta": "Visit brighton.dog",
+    "title": "提升生产力<br>让协作与产出更高效",
+    "sector": "3D 设计与工作流",
+    "content": "<strong>创造、协作、渲染 —— 全部融入一个流线型的工作流中。</strong><br><br>通过打通设计与技术的壁垒，团队在数分钟内即可产出震撼的视觉内容。这不仅仅是设计，更是通过高效的系统架构，让团队的生产力得到质的飞跃。",
+    "case_study_link": "#",
+    "cta": "联系我们查看案例",
     "image": "/content-images/brighton.dog.avif",
-    "image_alt": "iPad showing the web page of brighton.dog",
+    "image_alt": "平板显示的 3D 设计协作工作流",
     "bg": "bg-gradient-to-r from-pink-500 to-yellow-500"
   }
 ]
