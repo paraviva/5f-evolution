@@ -7,14 +7,14 @@ const { settings } = Astro.props
 <header class="wrapper bg-loop font-semibold">
   <div class="bs-container py-6 flex justify-between items-center">
     <a 
-      class="flex xl:min-w-32 group" 
+      class="flex xl:min-w-32 group items-center" 
       href="/" 
       aria-label={settings.title + ' - Home'}
     >
       <Logo 
-        class="transition-transform duration-300 ease-bs-spring group-hover:scale-110 group-active:scale-125" 
-        height="48" 
-        width="48" 
+        class="transition-all duration-500 ease-bs-spring group-hover:scale-105 group-active:scale-115 h-12 md:h-20 w-auto" 
+        height="80" 
+        width="80" 
       />
     </a>
 
@@ -41,9 +41,10 @@ const { settings } = Astro.props
   </div>
 </header>
 
-<style>
-  /* Astro 组件中如果要对导入的 SVG 标签生效样式，
-     通常需要配合 Tailwind 的 transition 类，
-     上面的 class 已经处理好了。
-  */
+<style is:global>
+  /* 确保导入的 SVG 颜色随主题或父级文字颜色变化（如果需要） */
+  svg {
+    display: block;
+    max-width: 100%;
+  }
 </style>
