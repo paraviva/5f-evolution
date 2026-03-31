@@ -1,32 +1,49 @@
 ---
-import Logo from '../assets/theme-images/logo.svg'
+import Logo from '../assets/theme-images/echo-logo.svg'
 
 const { settings } = Astro.props
 ---
 
 <header class="wrapper bg-loop font-semibold">
-  <!-- Wrapper -->
   <div class="bs-container py-6 flex justify-between items-center">
-    <!-- Logo -->
-    <a class="flex xl:min-w-32 group" href="/" aria-label={settings.title + ' - Home'}>
-      <Logo class="group-hover:-rotate-180 group-hover:scale-80 transition-transform ease-bs-spring duration-1000" height="48" width="48" />
+    <a 
+      class="flex xl:min-w-32 group" 
+      href="/" 
+      aria-label={settings.title + ' - Home'}
+    >
+      <Logo 
+        class="transition-transform duration-300 ease-bs-spring group-hover:scale-110 group-active:scale-125" 
+        height="48" 
+        width="48" 
+      />
     </a>
 
-    <!-- Nav -->
     <nav class="hidden col-span-6 md:flex mx-auto self-stretch lg:gap-2">
-      <!-- Links -->
       {
         settings.nav.map((item) => (
-          <a class="bs-btn bg-transparent! before:translate-y-full hover:before:translate-y-0" href={item.link}>
+          <a 
+            class="bs-btn bg-transparent! before:translate-y-full hover:before:translate-y-0" 
+            href={item.link}
+          >
             {item.title}
           </a>
         ))
       }
     </nav>
 
-    <!-- CTA -->
-    <button type="button" class="min-w-32 bs-btn" onclick="demo.showModal()">
+    <button 
+      type="button" 
+      class="min-w-32 bs-btn cursor-pointer transition-transform active:scale-95" 
+      onclick="demo.showModal()"
+    >
       {settings.demo.title}
     </button>
   </div>
 </header>
+
+<style>
+  /* Astro 组件中如果要对导入的 SVG 标签生效样式，
+     通常需要配合 Tailwind 的 transition 类，
+     上面的 class 已经处理好了。
+  */
+</style>
