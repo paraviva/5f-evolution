@@ -6,23 +6,24 @@ const { settings } = Astro.props
 
 <header class="wrapper bg-loop font-semibold">
   <div class="bs-container py-6 flex justify-between items-center">
+    
     <a 
-      class="flex xl:min-w-32 group items-center" 
+      class="flex items-center justify-start group overflow-visible" 
       href="/" 
       aria-label={settings.title + ' - Home'}
     >
-      <Logo 
-        class="transition-all duration-300 ease-bs-spring group-hover:scale-105 group-active:scale-125 h-12 w-auto" 
-        height="48" 
-        width="48" 
-      />
+      <div class="relative w-40 md:w-64 h-12 flex items-center">
+        <Logo 
+          class="transition-all duration-300 ease-bs-spring group-hover:scale-105 group-active:scale-125 w-full h-auto"
+        />
+      </div>
     </a>
 
-    <nav class="hidden col-span-6 md:flex mx-auto self-stretch lg:gap-2">
+    <nav class="hidden md:flex items-center mx-auto lg:gap-2">
       {
         settings.nav.map((item) => (
           <a 
-            class="bs-btn bg-transparent! before:translate-y-full hover:before:translate-y-0" 
+            class="bs-btn bg-transparent! before:translate-y-full hover:before:translate-y-0 px-4 py-2" 
             href={item.link}
           >
             {item.title}
@@ -42,9 +43,10 @@ const { settings } = Astro.props
 </header>
 
 <style is:global>
-  /* 确保 Logo 及其内部元素在缩放时不发糊 */
+  /* 强制覆盖 SVG 内部可能存在的宽高限制，确保它响应外部容器 */
   svg {
-    image-rendering: -webkit-optimize-contrast;
-    transform-origin: center;
+    max-width: 100%;
+    height: auto !important;
+    display: block;
   }
 </style>
