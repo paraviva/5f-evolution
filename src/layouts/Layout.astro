@@ -38,6 +38,9 @@ const { title, description } = Astro.props
 
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-inter-display" preload />
+
+    <!-- Per-page head injection (importmap, canonical, hreflang, etc.) -->
+    <slot name="head" />
   </head>
 
   <body id="top">

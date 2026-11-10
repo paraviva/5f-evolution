@@ -1,0 +1,254 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PolyLine3D from '../components/PolyLine3D.astro';
+import FaqSection from '../components/FaqSection.astro';
+
+const title = 'PET Production Line 3D Explorer — Turnkey Polyester (PET) Plant';
+const description = 'Interactive 3D explorer of an 8-stage polyester (PET) production line: process flow, capacity matrix, turnkey scope and process FAQ. __COMPANY__ delivers turnkey PET lines.';
+const canonical = 'https://__DOMAIN__/3d-polyester-line/';
+
+const faq = [
+  { question: 'How much space and utility does a 300 t/d PET line need?', answer: '<p>Plan for roughly 5,200 m² of battery-limit footprint, about 13 MW of power, 28 t/h of steam and ~520 t/h of cooling water, plus a vacuum and HTM system. Exact numbers come from the utility balance in the basic design.</p>' },
+  { question: 'What is the real difference between esterification and polycondensation?', answer: '<p>Esterification forms the ester bonds and removes water at near-atmospheric pressure; polycondensation couples the resulting oligomers into long chains and removes glycol under deep vacuum. The first sets composition, the second sets molecular weight (IV).</p>' },
+  { question: 'Why must bottle-grade chip add an SSP step?', answer: '<p>Bottle grade needs IV around 0.80 dl/g. Melt-phase polycondensation alone reaches only ~0.64; solid-state polycondensation in a tower at 200–230 °C pushes IV higher without thermal degradation and controls acetaldehyde for food contact.</p>' },
+  { question: 'Continuous or intermittent — which should I choose?', answer: '<p>Continuous is standard above ~100 t/d for consistent quality and lower unit cost. Intermittent / batch makes sense for multi-grade, low-volume or pilot plants. We size the route to your product mix.</p>' },
+  { question: 'How long from order to qualified chips (FAT/SAT)?', answer: '<p>A typical single line runs about 12–18 months including design, manufacturing, shipment, installation and commissioning, depending on capacity, scope and site readiness.</p>' },
+  { question: 'Who handles installation and commissioning, and what do I provide?', answer: '<p>__COMPANY__ supplies supervised or full erection and commissioning. The client typically provides foundations, civil works, permanent utility tie-ins beyond the battery limit, permits and local labour coordination.</p>' },
+  { question: 'What materials and standards apply to the key equipment?', answer: '<p>Reactors and product-contact vessels are normally SS316L; the finish polycondensation reactor and underwater cutter are the most specification-critical items. Manufacturing follows the agreed codes (e.g. GB/ASME as applicable) and is FAT-verified.</p>' },
+  { question: 'Can capacity be upgraded (revamp) on an existing line?', answer: '<p>Often yes — through higher-IV catalyst, optimised vacuum, added SSP or de-bottlenecking of specific units. A revamp study against your current line defines the realistic ceiling before any hardware change.</p>' },
+];
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <!-- three.js via importmap + CDN; no npm dependency. Must precede module scripts. -->
+    <script type="importmap" is:inline>
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+  </Fragment>
+
+  <div class="bs-container bs-mt-lg pl-page">
+
+    <!-- ===== HERO ===== -->
+    <section class="pl-hero">
+      <h1>Polyester (PET) Production Line — Interactive 3D Explorer</h1>
+      <p class="sub">See the whole plant before you ask for a quote. Eight process stages, material flow, key parameters and the full turnkey scope — in one view.</p>
+      <div class="pl-cta-row">
+        <a class="bs-btn pl-cta-primary" href="#explorer">Explore the line in 3D</a>
+        <button class="bs-btn" type="button" onclick="demo.showModal()">Request a process design</button>
+      </div>
+    </section>
+
+    <!-- ===== 3D BLOCK ===== -->
+    <section id="explorer" class="pl-block">
+      <h2>3D Plant Explorer</h2>
+      <p class="pl-lead">The first view is a plain process flow diagram (loads instantly, works everywhere). Press <strong>Launch interactive 3D view</strong> to load the WebGL model — it streams in only on request.</p>
+      <PolyLine3D />
+    </section>
+
+    <!-- ===== WHAT A PET LINE IS ===== -->
+    <section class="pl-block">
+      <h2>What a PET production line actually is</h2>
+      <p>
+        A polyester (PET) production line converts purified terephthalic acid (PTA) and ethylene glycol (EG)
+        into polyethylene terephthalate — the polymer behind fibre, bottle and film grades. The chemistry runs
+        in two linked steps. <strong>Esterification</strong> joins PTA and EG into a low-molecular-weight
+        oligomer while water is removed; <strong>polycondensation</strong> then couples those oligomers into
+        long chains, driving off EG under deep vacuum until the melt reaches the target intrinsic viscosity (IV).
+        A continuous line does this without stopping: slurry in one end, solid chips out the other, hour after hour.
+      </p>
+      <p>
+        Lines are usually rated by daily chip output. Typical single-line capacities run from about
+        __CAPACITY_RANGE__, with 300–600 t/d the most common commercial range. The same core process serves
+        fibre-grade (IV ~0.64 dl/g) and bottle-grade (IV ~0.80 dl/g, normally with an added solid-state
+        polycondensation / SSP step). __COMPANY__ supplies these lines on a turnkey basis: process design,
+        equipment manufacturing, shipment, installation, commissioning, training and spares.
+      </p>
+    </section>
+
+    <!-- ===== 8 STAGES ===== -->
+    <section class="pl-block">
+      <h2>The eight process stages</h2>
+      <div class="pl-stages">
+        <article><h3>1 · PTA / EG Feeding &amp; Slurry Prep</h3><p>Dry PTA and liquid EG are metered to a fixed molar ratio (~1.15–1.20 : 1) and mixed into a homogeneous slurry so the reactors receive a consistent feed. Stable slurry concentration (~65 wt%) is what keeps esterification steady.</p><p class="pl-param">Slurry ~65 wt% · ambient</p></article>
+        <article><h3>2 · Esterification Reactor</h3><p>Slurry is heated and reacted in a tower with internal trays. Water of reaction is stripped out continuously; reaching &gt;96% esterification here means less load on the vacuum stages downstream.</p><p class="pl-param">250–260 °C · 0.1–0.15 MPa(G)</p></article>
+        <article><h3>3 · Pre-Polycondensation</h3><p>Viscosity begins to build. The melt is held under moderate vacuum so glycol can leave, bridging short oligomers into longer chains before the most demanding vacuum step.</p><p class="pl-param">270–280 °C · 10–20 kPa(a)</p></article>
+        <article><h3>4 · Finish Polycondensation</h3><p>The disc-ring reactor pushes the reaction to final IV under the deepest vacuum (&lt;100 Pa). This is the heart of the line and the hardest equipment to build to tolerance.</p><p class="pl-param">280–285 °C · &lt;100 Pa</p></article>
+        <article><h3>5 · Melt Filtration &amp; Boost Pump</h3><p>Dual filters trap gel and solid particles; a gear pump holds melt pressure steady into the cutter. Continuous lines use duplex filters so one bank can be changed without stopping.</p><p class="pl-param">Melt IV 0.60–0.64 dl/g</p></article>
+        <article><h3>6 · Underwater Cutting &amp; Dewatering</h3><p>Melt strands are cut underwater into uniform chips, then spin-dried and conveyed. Chip geometry (typically 2.5×3 mm) matters for handling, drying and later processing.</p><p class="pl-param">Chip 2.5×3 mm</p></article>
+        <article><h3>7 · Chip Silos &amp; Bagging</h3><p>Chips are buffered in silos and automatically bagged. Controlled moisture (&lt;0.4%) protects IV and downstream quality.</p><p class="pl-param">Moisture &lt;0.4%</p></article>
+        <article><h3>8 · Utility Island</h3><p>Heat-transfer-oil furnace, vacuum ejector system and cooling tower supply the energy and vacuum the process needs. These often decide a line's real footprint and operating cost.</p><p class="pl-param">HTM 320 °C · vacuum &lt;100 Pa</p></article>
+      </div>
+    </section>
+
+    <!-- ===== CAPACITY MATRIX ===== -->
+    <section class="pl-block">
+      <h2>Capacity matrix</h2>
+      <p class="pl-lead">Indicative utility and staffing at common single-line capacities. Figures are planning ranges; a detailed balance is part of the process design.</p>
+      <div class="pl-table-wrap">
+        <table>
+          <thead><tr><th>Capacity (t/d)</th><th>Footprint (m²)</th><th>Power (MW)</th><th>Steam (t/h)</th><th>Cooling water (t/h)</th><th>N₂ (Nm³/h)</th><th>Staff (4-shift)</th></tr></thead>
+          <tbody>
+            <tr><td>50</td><td>~1,800</td><td>~3.0</td><td>~6</td><td>~120</td><td>~30</td><td>~12</td></tr>
+            <tr><td>100</td><td>~2,600</td><td>~5.2</td><td>~11</td><td>~210</td><td>~50</td><td>~16</td></tr>
+            <tr><td>300</td><td>~5,200</td><td>~13</td><td>~28</td><td>~520</td><td>~120</td><td>~24</td></tr>
+            <tr><td>600</td><td>~8,500</td><td>~24</td><td>~52</td><td>~980</td><td>~220</td><td>~32</td></tr>
+            <tr><td>1,000</td><td>~12,500</td><td>~38</td><td>~82</td><td>~1,550</td><td>~340</td><td>~40</td></tr>
+            <tr><td>1,200</td><td>~14,500</td><td>~45</td><td>~96</td><td>~1,800</td><td>~400</td><td>~44</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== FIBRE vs BOTTLE ===== -->
+    <section class="pl-block">
+      <h2>Fibre-grade vs bottle-grade (the IV difference)</h2>
+      <div class="pl-table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Fibre-grade</th><th>Bottle-grade</th></tr></thead>
+          <tbody>
+            <tr><td>Intrinsic viscosity</td><td>0.62–0.66 dl/g</td><td>0.78–0.84 dl/g</td></tr>
+            <tr><td>SSP required</td><td>No</td><td>Yes (solid-state polycondensation)</td></tr>
+            <tr><td>Acetaldehyde control</td><td>Standard</td><td>Tight (food-contact)</td></tr>
+            <tr><td>Typical use</td><td>Staple / filament fibre</td><td>Bottles, sheets, thermoform</td></tr>
+            <tr><td>Extra equipment</td><td>—</td><td>SSP tower + post-crystalliser</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== TURNKEY SCOPE ===== -->
+    <section class="pl-block">
+      <h2>Turnkey scope of supply</h2>
+      <p class="pl-lead">What __COMPANY__ typically includes — and what sits with the client — for a complete PET line project.</p>
+      <ol class="pl-scope">
+        <li><strong>Process design &amp; basic engineering</strong> — flow sheet, mass/energy balance, equipment list. <em>Included.</em></li>
+        <li><strong>Detail design &amp; 3D model</strong> — piping, structures, instrumentation. <em>Included.</em></li>
+        <li><strong>Equipment manufacturing</strong> — reactors, vessels, pumps, cutter. <em>Included.</em></li>
+        <li><strong>Packaged units</strong> — HTM system, vacuum, cooling. <em>Included (or nominated).</em></li>
+        <li><strong>Electrical &amp; instrumentation</strong> — MCC, PLC/DCS, field instruments. <em>Included.</em></li>
+        <li><strong>Steel structure &amp; piping</strong> — pipe rack, supports, process piping. <em>Included.</em></li>
+        <li><strong>Factory acceptance test (FAT)</strong> — equipment tested before shipment. <em>Included.</em></li>
+        <li><strong>Sea / land freight &amp; insurance</strong>. <em>Included (CIF/CFR as agreed).</em></li>
+        <li><strong>Site installation &amp; erection</strong>. <em>Included (supervised or full).</em></li>
+        <li><strong>Commissioning &amp; SAT</strong> — bring the line to qualified chips. <em>Included.</em></li>
+        <li><strong>Operator training</strong> — operation, maintenance, safety. <em>Included.</em></li>
+        <li><strong>Spares &amp; warranty</strong> — start-up spares kit, defined warranty. <em>Included.</em></li>
+      </ol>
+      <p class="pl-lead">Usually client-supplied: plant civil works/foundations, permanent utilities tie-in beyond battery limits, local permits, and recurring consumables.</p>
+    </section>
+
+    <!-- ===== MATERIALS ===== -->
+    <section class="pl-block">
+      <h2>Materials &amp; manufacturing standards</h2>
+      <div class="pl-table-wrap">
+        <table>
+          <thead><tr><th>Equipment part</th><th>Typical material</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Reactors, vessels (product contact)</td><td>SS316L</td><td>Corrosion resistance at 280 °C</td></tr>
+            <tr><td>Tanks, non-critical contact</td><td>SS304</td><td>Cost-effective where duty allows</td></tr>
+            <tr><td>Structural steel, skids</td><td>Carbon steel + insulation</td><td>Painting / hot-dip as specified</td></tr>
+            <tr><td>Insulation jacketing</td><td>Aluminium / SS</td><td>Reduces heat loss on hot surfaces</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== FAQ (reuses repo FaqSection) ===== -->
+    <FaqSection title="Frequently asked questions" faq={faq} />
+
+    <!-- ===== QUOTE CTA ===== -->
+    <section class="pl-block pl-cta-block">
+      <h2>Ready to scope your line?</h2>
+      <p>Tell us your target capacity, grade mix and market, and we will return a process concept and indicative scope.</p>
+      <button class="bs-btn pl-cta-primary" type="button" onclick="demo.showModal()">Request a process design</button>
+    </section>
+
+    <!-- ===== JSON-LD ===== -->
+    <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Turnkey Polyester (PET) Production Line",
+          "serviceType": "EPC / turnkey PET plant engineering and supply",
+          "areaServed": ["Middle East", "Southeast Asia", "Central Asia", "Africa", "South America"],
+          "provider": { "@type": "Organization", "name": "__COMPANY__" },
+          "url": "https://__DOMAIN__/3d-polyester-line/"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "How much space and utility does a 300 t/d PET line need?", "acceptedAnswer": { "@type": "Answer", "text": "Plan for roughly 5,200 m2 footprint, about 13 MW power, 28 t/h steam and 520 t/h cooling water, plus vacuum and HTM systems." } },
+            { "@type": "Question", "name": "What is the difference between esterification and polycondensation?", "acceptedAnswer": { "@type": "Answer", "text": "Esterification forms ester bonds and removes water near atmospheric pressure; polycondensation couples oligomers and removes glycol under deep vacuum to build molecular weight (IV)." } },
+            { "@type": "Question", "name": "Why must bottle-grade chip add an SSP step?", "acceptedAnswer": { "@type": "Answer", "text": "Bottle grade needs IV around 0.80 dl/g; melt-phase alone reaches about 0.64, so solid-state polycondensation raises IV without thermal degradation and controls acetaldehyde." } },
+            { "@type": "Question", "name": "Continuous or intermittent — which should I choose?", "acceptedAnswer": { "@type": "Answer", "text": "Continuous is standard above about 100 t/d for consistent quality and lower unit cost; intermittent suits low-volume or multi-grade plants." } },
+            { "@type": "Question", "name": "How long from order to qualified chips?", "acceptedAnswer": { "@type": "Answer", "text": "A typical single line runs about 12-18 months including design, manufacturing, shipment, installation and commissioning." } },
+            { "@type": "Question", "name": "Who handles installation and commissioning?", "acceptedAnswer": { "@type": "Answer", "text": "The supplier provides supervised or full erection and commissioning; the client provides foundations, civil works, permanent utility tie-ins, permits and local labour coordination." } },
+            { "@type": "Question", "name": "What materials and standards apply to key equipment?", "acceptedAnswer": { "@type": "Answer", "text": "Reactors and product-contact vessels are normally SS316L; the finish polycondensation reactor and underwater cutter are the most specification-critical items and are FAT-verified." } },
+            { "@type": "Question", "name": "Can capacity be upgraded on an existing line?", "acceptedAnswer": { "@type": "Answer", "text": "Often yes, via higher-IV catalyst, optimised vacuum, added SSP or targeted de-bottlenecking; a revamp study defines the realistic ceiling first." } }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://__DOMAIN__/" },
+            { "@type": "ListItem", "position": 2, "name": "Polyester Production Line", "item": "https://__DOMAIN__/3d-polyester-line/" }
+          ]
+        },
+        {
+          "@type": "WebApplication",
+          "name": "PET Production Line 3D Explorer",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Any (WebGL)",
+          "url": "https://__DOMAIN__/3d-polyester-line/"
+        },
+        {
+          "@type": "Organization",
+          "name": "__COMPANY__",
+          "url": "https://__DOMAIN__/"
+        }
+      ]
+    }
+    </script>
+  </div>
+</Layout>
+
+<style>
+  .pl-page { color: #e6edf3; }
+  .pl-hero { padding: 8px 0 4px; }
+  .pl-hero h1 { font-size: 30px; line-height: 1.25; margin: 0 0 12px; color: #e6edf3; }
+  .pl-hero .sub { color: #9aa4b2; font-size: 17px; max-width: 760px; margin: 0 0 18px; }
+  .pl-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .pl-cta-primary { background: #4ea1ff; color: #06121f; }
+  .pl-cta-primary:hover { background: #6fb4ff; }
+  .pl-block { padding: 30px 0; border-top: 1px solid #2a313c; }
+  .pl-block h2 { font-size: 23px; margin: 0 0 10px; color: #e6edf3; }
+  .pl-lead { color: #9aa4b2; max-width: 820px; }
+  .pl-stages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 14px; }
+  .pl-stages article { background: #11161d; border: 1px solid #2a313c; border-radius: 12px; padding: 16px; }
+  .pl-stages h3 { margin: 0 0 8px; font-size: 16px; color: #e6edf3; }
+  .pl-stages p { margin: 0 0 8px; font-size: 14px; color: #cdd6e0; }
+  .pl-param { color: #4ea1ff !important; font-size: 12px !important; font-family: ui-monospace, monospace; }
+  .pl-table-wrap { overflow-x: auto; margin-top: 14px; }
+  .pl-table-wrap table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+  .pl-table-wrap th, .pl-table-wrap td { border: 1px solid #2a313c; padding: 9px 12px; text-align: left; }
+  .pl-table-wrap th { background: #11161d; color: #e6edf3; }
+  .pl-table-wrap tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+  .pl-scope { line-height: 1.9; padding-left: 22px; color: #cdd6e0; }
+  .pl-scope em { color: #9aa4b2; font-style: normal; font-size: 13px; }
+  .pl-cta-block { text-align: center; }
+  @media (max-width: 720px) {
+    .pl-stages { grid-template-columns: 1fr; }
+    .pl-hero h1 { font-size: 24px; }
+  }
+</style>

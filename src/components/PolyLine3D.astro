@@ -1,0 +1,224 @@
+---
+// PolyLine3D.astro — canvas shell, SVG PFD fallback, control panel, lead layer, HUD.
+// 3D is mounted on demand (Launch button) via dynamic import of /js/poly-line-3d.js.
+---
+<div class="pl3d" id="pl3d">
+  <!-- 1) SVG process flow diagram (PFD) — first paint, no WebGL -->
+  <div class="pl-pfd" data-pl-pfd aria-label="Process flow diagram">
+    <svg viewBox="0 0 960 150" preserveAspectRatio="xMidYMid meet" role="img">
+      <defs>
+        <marker id="pl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#9aa4b2"></path>
+        </marker>
+      </defs>
+      <g font-size="11" fill="#e6edf3" text-anchor="middle" font-family="system-ui,sans-serif">
+        <!-- boxes -->
+        <g>
+          <rect x="6"   y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="54"  y="72">Slurry</text><text x="54"  y="86" fill="#9aa4b2" font-size="9">~65 wt%</text>
+          <rect x="118" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="166" y="72">Esterify</text><text x="166" y="86" fill="#9aa4b2" font-size="9">255 °C</text>
+          <rect x="230" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="278" y="72">Pre-Poly</text><text x="278" y="86" fill="#9aa4b2" font-size="9">15 kPa</text>
+          <rect x="342" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="390" y="72">Finish</text><text x="390" y="86" fill="#9aa4b2" font-size="9"><100 Pa</text>
+          <rect x="454" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="502" y="72">Filter+Pump</text><text x="502" y="86" fill="#9aa4b2" font-size="9">IV 0.62</text>
+          <rect x="566" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="614" y="72">Cut+Dry</text><text x="614" y="86" fill="#9aa4b2" font-size="9">2.5×3 mm</text>
+          <rect x="678" y="55" width="96" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="726" y="72">Silo+Bag</text><text x="726" y="86" fill="#9aa4b2" font-size="9"><0.4%</text>
+          <rect x="838" y="55" width="110" height="40" rx="6" fill="#1b2230" stroke="#3a4452"></rect>
+          <text x="893" y="72">Utilities</text><text x="893" y="86" fill="#9aa4b2" font-size="9">HTM 320 °C</text>
+        </g>
+        <!-- arrows -->
+        <g stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#pl-arrow)">
+          <line x1="102" y1="75" x2="116" y2="75"></line>
+          <line x1="214" y1="75" x2="228" y2="75"></line>
+          <line x1="326" y1="75" x2="340" y2="75"></line>
+          <line x1="438" y1="75" x2="452" y2="75"></line>
+          <line x1="550" y1="75" x2="564" y2="75"></line>
+          <line x1="662" y1="75" x2="676" y2="75"></line>
+          <line x1="774" y1="75" x2="836" y2="75"></line>
+        </g>
+      </g>
+    </svg>
+    <p class="pl-pfd-note">Process flow diagram (PFD). Launch the interactive 3D view below for the full plant model.</p>
+  </div>
+
+  <!-- 2) WebGL stage (hidden until launch) -->
+  <div class="pl-stage" data-pl-stage hidden>
+    <canvas data-pl-canvas></canvas>
+    <div class="pl-labels" data-pl-labels></div>
+    <svg class="pl-leads" data-pl-leads xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="pl-hud" data-pl-hud hidden></div>
+    <div class="pl-subtitle" data-pl-subtitle></div>
+  </div>
+
+  <!-- 3) Launch -->
+  <div class="pl-launch">
+    <button type="button" data-pl-launch class="pl-btn-primary">Launch interactive 3D view</button>
+  </div>
+
+  <!-- 4) Control panel (hidden until launch) -->
+  <div class="pl-panel" data-pl-panel hidden>
+    <div class="pl-row">
+      <label class="pl-switch"><input type="checkbox" data-ctl="flow" checked /> Flow animation</label>
+      <label class="pl-switch"><input type="checkbox" data-ctl="insulation" checked /> Insulation</label>
+      <label class="pl-switch"><input type="checkbox" data-ctl="labels" checked /> Labels</label>
+      <label class="pl-switch"><input type="checkbox" data-ctl="section" /> X-ray section</label>
+    </div>
+    <div class="pl-row">
+      <span class="pl-field">Material
+        <select data-ctl="material">
+          <option value="SS316L">SS316L</option>
+          <option value="SS304">SS304</option>
+          <option value="CARBON">Carbon steel</option>
+        </select>
+      </span>
+      <span class="pl-field">Capacity
+        <input type="range" min="50" max="1200" step="10" value="300" data-ctl="capacity" />
+        <output data-out="capacity">300 t/d</output>
+      </span>
+      <span class="pl-field">Explode
+        <input type="range" min="0" max="1" step="0.05" value="0" data-ctl="explode" />
+      </span>
+    </div>
+    <div class="pl-row pl-focus-row">
+      <span class="pl-field">Focus stage</span>
+      <button type="button" class="pl-chip" data-focus="s1">Slurry</button>
+      <button type="button" class="pl-chip" data-focus="s2">Esterify</button>
+      <button type="button" class="pl-chip" data-focus="s3">Pre-Poly</button>
+      <button type="button" class="pl-chip" data-focus="s4">Finish</button>
+      <button type="button" class="pl-chip" data-focus="s5">Filter</button>
+      <button type="button" class="pl-chip" data-focus="s6">Cut</button>
+      <button type="button" class="pl-chip" data-focus="s7">Silo</button>
+      <button type="button" class="pl-chip" data-focus="s8">Utilities</button>
+      <button type="button" class="pl-chip" data-focus="">Clear</button>
+    </div>
+    <div class="pl-row">
+      <button type="button" class="pl-btn" data-ctl="tour">Auto tour</button>
+      <button type="button" class="pl-btn" data-ctl="reset">Reset view</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function () {
+  const root = document.getElementById('pl3d');
+  if (!root) return;
+  const launchBtn = root.querySelector('[data-pl-launch]');
+  const stage = root.querySelector('[data-pl-stage]');
+  const pfd = root.querySelector('[data-pl-pfd]');
+  const panel = root.querySelector('[data-pl-panel]');
+  let api = null;
+
+  function supportsWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  launchBtn.addEventListener('click', async () => {
+    if (!supportsWebGL()) {
+      launchBtn.textContent = '3D not available on this device — showing the process diagram';
+      launchBtn.disabled = true;
+      return;
+    }
+    launchBtn.disabled = true;
+    launchBtn.textContent = 'Loading 3D…';
+    try {
+      const mod = await import('/js/poly-line-3d.js');
+      api = mod.mountPolyLine3D(stage, {});
+      pfd.hidden = true;
+      stage.hidden = false;
+      panel.hidden = false;
+      launchBtn.hidden = true;
+      wire(api);
+    } catch (e) {
+      console.error(e);
+      launchBtn.textContent = 'Failed to load 3D (' + (e && e.message ? e.message : e) + ')';
+      launchBtn.disabled = false;
+    }
+  });
+
+  function wire(a) {
+    const q = (s) => root.querySelector(s);
+    q('[data-ctl="flow"]').addEventListener('change', (e) => a.setFlow(e.target.checked));
+    q('[data-ctl="insulation"]').addEventListener('change', (e) => a.setInsulation(e.target.checked));
+    q('[data-ctl="labels"]').addEventListener('change', (e) => a.setLabels(e.target.checked));
+    q('[data-ctl="section"]').addEventListener('change', (e) => a.setSection(e.target.checked));
+    q('[data-ctl="material"]').addEventListener('change', (e) => a.setMaterial(e.target.value));
+    const cap = q('[data-ctl="capacity"]'), capOut = q('[data-out="capacity"]');
+    cap.addEventListener('input', (e) => { const v = +e.target.value; capOut.textContent = v + ' t/d'; a.setCapacity(v); });
+    q('[data-ctl="explode"]').addEventListener('input', (e) => a.setExplode(+e.target.value));
+    root.querySelectorAll('[data-focus]').forEach((b) => b.addEventListener('click', () => a.setFocus(b.dataset.focus || null)));
+    q('[data-ctl="tour"]').addEventListener('click', () => a.startTour());
+    q('[data-ctl="reset"]').addEventListener('click', () => a.reset());
+  }
+})();
+</script>
+
+<style is:global>
+  .pl3d { width: 100%; }
+  [hidden] { display: none !important; }
+  .pl-pfd {
+    background: #11161d; border: 1px solid #2a313c; border-radius: 12px;
+    padding: 14px; margin-bottom: 14px;
+  }
+  .pl-pfd svg { width: 100%; height: auto; display: block; }
+  .pl-pfd-note { color: #9aa4b2; font-size: 13px; margin: 8px 2px 0; }
+  .pl-stage {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 620px;
+    background: #0e1116; border: 1px solid #2a313c; border-radius: 12px; overflow: hidden;
+  }
+  .pl-stage canvas { display: block; width: 100%; height: 100%; }
+  /* runtime-created nodes — must be :global (pit 4) */
+  .pl-labels { position: absolute; inset: 0; pointer-events: none; }
+  .pl-label {
+    position: absolute; top: 0; left: 0; will-change: transform;
+    background: rgba(16,21,28,.82); border: 1px solid #3a4452; border-radius: 8px;
+    padding: 4px 8px; min-width: 86px; text-align: center; backdrop-filter: blur(2px);
+  }
+  .pl-label b { display: block; font-size: 12px; letter-spacing: .4px; color: #e6edf3; }
+  .pl-label small { display: block; font-size: 10px; color: #9aa4b2; }
+  .pl-leads { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .pl-lead { stroke: #4ea1ff; stroke-width: 1; }
+  .pl-hud {
+    position: absolute; top: 10px; right: 10px; font-size: 11px; color: #9aa4b2;
+    background: rgba(16,21,28,.7); border: 1px solid #2a313c; border-radius: 6px; padding: 3px 8px;
+  }
+  .pl-subtitle {
+    position: absolute; left: 12px; bottom: 12px; right: 12px; max-width: 70%;
+    font-size: 13px; color: #e6edf3; background: rgba(16,21,28,.78);
+    border: 1px solid #2a313c; border-radius: 8px; padding: 8px 12px; opacity: 0; transition: opacity .3s;
+  }
+  .pl-launch { margin: 12px 0; }
+  .pl-btn-primary {
+    background: #4ea1ff; color: #06121f; border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .pl-btn-primary:disabled { background: #2a313c; color: #9aa4b2; cursor: default; }
+  .pl-panel { border: 1px solid #2a313c; border-radius: 12px; padding: 14px; margin-top: 6px; background: #11161d; }
+  .pl-row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-bottom: 10px; }
+  .pl-row:last-child { margin-bottom: 0; }
+  .pl-switch { font-size: 13px; color: #cdd6e0; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .pl-field { font-size: 13px; color: #cdd6e0; display: inline-flex; align-items: center; gap: 8px; }
+  .pl-field select, .pl-field input[type="range"] { accent-color: #4ea1ff; }
+  .pl-field output { color: #9aa4b2; min-width: 54px; }
+  .pl-chip {
+    background: #1b2230; color: #cdd6e0; border: 1px solid #3a4452; border-radius: 999px;
+    padding: 5px 12px; font-size: 12px; cursor: pointer;
+  }
+  .pl-chip:hover { border-color: #4ea1ff; color: #fff; }
+  .pl-btn {
+    background: #1b2230; color: #e6edf3; border: 1px solid #3a4452; border-radius: 8px;
+    padding: 8px 16px; font-size: 13px; cursor: pointer;
+  }
+  .pl-btn:hover { border-color: #4ea1ff; }
+  @media (max-width: 640px) {
+    .pl-panel { font-size: 12px; }
+    .pl-field input[type="range"] { width: 120px; }
+  }
+</style>
