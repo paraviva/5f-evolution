@@ -1,7 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import hero_screens from '../assets/theme-images/hero-screens.png'
-
 const { settings, title, content } = Astro.props
 ---
 
@@ -22,6 +19,6 @@ const { settings, title, content } = Astro.props
 
   <!-- Image -->
   <figure class="flex place-content-center -mt-20 lg:mt-0">
-    <Image src={hero_screens} format="avif" quality="high" alt="Screens showing phone, tablet and desktop views of our website" loading="eager" />
+    <img src="/hero-screens.svg" alt="5F GEO 覆盖的渠道：Google、Bing、ChatGPT、Claude、Gemini、LinkedIn、X、Facebook、Instagram、YouTube 等搜索、AI 与社交平台" class="w-full h-auto" width="1100" height="820" loading="eager" />
   </figure>
 </section>

@@ -1,52 +1,78 @@
 ---
 import Logo from '../assets/theme-images/echo-logo.svg'
+import { PILLARS } from '../data/taxonomy'
 
 const { settings } = Astro.props
 ---
 
 <header class="wrapper bg-loop font-semibold">
   <div class="bs-container py-6 flex justify-between items-center">
-    
-    <a 
-      class="flex items-center justify-start group overflow-visible" 
-      href="/" 
-      aria-label={settings.title + ' - Home'}
-    >
+    <a class="flex items-center justify-start group overflow-visible" href="/" aria-label={settings.title + ' - Home'}>
       <div class="relative w-40 md:w-64 h-12 flex items-center">
-        <Logo 
-          class="transition-all duration-300 ease-bs-spring group-hover:scale-105 group-active:scale-125 w-full h-auto"
-        />
+        <Logo class="transition-all duration-300 ease-bs-spring group-hover:scale-105 group-active:scale-125 w-full h-auto" />
       </div>
     </a>
 
-    <nav class="hidden md:flex items-center mx-auto lg:gap-2">
-      {
-        settings.nav.map((item) => (
-          <a 
-            class="bs-btn bg-transparent! before:translate-y-full hover:before:translate-y-0 px-4 py-2" 
-            href={item.link}
-          >
-            {item.title}
-          </a>
-        ))
-      }
+    <!-- 桌面端 5F 下拉导航 -->
+    <nav class="hidden lg:flex items-center mx-auto gap-1" aria-label="primary">
+      {PILLARS.map((p) => (
+        <div class="f-nav-item">
+          <a class="bs-btn bg-transparent! px-4 py-2 f-nav-trigger" href={`/${p.slug}/`}>{p.name}</a>
+          <div class="f-dropdown">
+            <a class="f-drop-top" href={`/${p.slug}/`}>{p.cn} · 总览</a>
+            {p.categories.map((c) => (
+              <a href={`/${p.slug}/${c.slug}/`}>{c.name}</a>
+            ))}
+          </div>
+        </div>
+      ))}
     </nav>
 
-    <button 
-      type="button" 
-      class="min-w-32 bs-btn cursor-pointer transition-transform active:scale-95" 
-      onclick="demo.showModal()"
-    >
-      {settings.demo.title}
-    </button>
+    <div class="flex items-center gap-3">
+      <button type="button" class="min-w-32 bs-btn cursor-pointer transition-transform active:scale-95" onclick="demo.showModal()">
+        {settings.demo.title}
+      </button>
+      <!-- 移动端菜单 -->
+      <details class="lg:hidden f-mobile-menu">
+        <summary class="bs-btn" aria-label="menu">☰</summary>
+        <div class="f-mobile-panel">
+          {PILLARS.map((p) => (
+            <div class="f-mobile-pillar">
+              <a href={`/${p.slug}/`} class="f-mobile-p">{p.name}</a>
+              {p.categories.map((c) => (
+                <a href={`/${p.slug}/${c.slug}/`} class="f-mobile-c">{c.name}</a>
+              ))}
+            </div>
+          ))}
+        </div>
+      </details>
+    </div>
   </div>
 </header>
 
 <style is:global>
-  /* 强制覆盖 SVG 内部可能存在的宽高限制，确保它响应外部容器 */
-  svg {
-    max-width: 100%;
-    height: auto !important;
-    display: block;
+  .f-nav-item { position: relative; }
+  .f-nav-item:hover .f-dropdown,
+  .f-nav-item:focus-within .f-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .f-dropdown {
+    position: absolute; top: 100%; left: 0; min-width: 220px;
+    background: #121212; border: 1px solid #2F2F31; border-radius: 12px;
+    padding: .5rem; display: flex; flex-direction: column; gap: .15rem;
+    opacity: 0; visibility: hidden; transform: translateY(8px); transition: all .18s ease;
+    box-shadow: 0 18px 40px rgba(0,0,0,.5); z-index: 50;
   }
+  .f-dropdown a { color: #cfcfcf; text-decoration: none; padding: .5rem .7rem; border-radius: 8px; font-size: .92rem; }
+  .f-dropdown a:hover { background: #1f1f24; color: #4ea1ff; }
+  .f-drop-top { color: #4ea1ff !important; font-weight: 600; border-bottom: 1px solid #2F2F31; margin-bottom: .2rem; }
+
+  .f-mobile-menu { list-style: none; }
+  .f-mobile-menu > summary { list-style: none; cursor: pointer; }
+  .f-mobile-panel {
+    position: absolute; right: 1rem; top: 100%; width: min(88vw, 320px);
+    background: #121212; border: 1px solid #2F2F31; border-radius: 14px; padding: 1rem; margin-top: .5rem;
+    display: flex; flex-direction: column; gap: 1rem; max-height: 75vh; overflow: auto;
+  }
+  .f-mobile-p { display: block; color: #4ea1ff; font-weight: 600; text-decoration: none; margin-bottom: .3rem; }
+  .f-mobile-c { display: block; color: #cfcfcf; text-decoration: none; font-size: .9rem; padding: .25rem 0; }
+  .f-mobile-c:hover { color: #fff; }
 </style>

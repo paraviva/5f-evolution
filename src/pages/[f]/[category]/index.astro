@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../../layouts/Layout.astro'
+import { PILLARS, getPillar, getCategory } from '../../../data/taxonomy'
+import globalSettings from '../../../data/global_settings.json'
+const base = globalSettings.base_url
+
+export async function getStaticPaths() {
+  const paths: any[] = []
+  for (const p of PILLARS) {
+    for (const c of p.categories) {
+      paths.push({ params: { f: p.slug, category: c.slug }, props: { pillar: p, category: c } })
+    }
+  }
+  return paths
+}
+
+const { pillar, category } = Astro.props
+const title = `${category.name} · ${pillar.name} ${pillar.cn} | 5F GEO`
+const description = category.blurb
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: `${pillar.name}`, url: `/${pillar.slug}/` },
+  { name: category.name, url: `/${pillar.slug}/${category.slug}/` },
+]
+
+const guides = await getCollection('guides')
+const articles = guides
+  .filter((g) => g.data.f === pillar.slug && g.data.category === category.slug)
+  .sort((a, b) => a.data.order - b.data.order)
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="canonical" href={`${base}/${pillar.slug}/${category.slug}/`} />
+    <link rel="alternate" hreflang="en" href={`${base}/${pillar.slug}/${category.slug}/`} />
+    <link rel="alternate" hreflang="x-default" href={`${base}/${pillar.slug}/${category.slug}/`} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: base + c.url })),
+    })} />
+  </Fragment>
+
+  <main class="bs-container bs-mt-lg">
+    <nav class="f-breadcrumb">
+      {crumbs.map((c, i) => (<span>{i > 0 && ' / '}<a href={c.url}>{c.name}</a></span>))}
+    </nav>
+
+    <header class="f-cat-hero">
+      <a class="f-back" href={`/${pillar.slug}/`}>← {pillar.name}</a>
+      <h1 class="bs-h2">{category.name}</h1>
+      <p class="f-blurb">{category.blurb}</p>
+    </header>
+
+    <section class="f-article-list">
+      {articles.map((a) => (
+        <a class="f-article-card" href={`/${pillar.slug}/${category.slug}/${a.id.split('/')[2]}/`}>
+          <h2>{a.data.title}</h2>
+          <p>{a.data.description}</p>
+          <span class="f-read">阅读 →</span>
+        </a>
+      ))}
+      {articles.length === 0 && (
+        <div class="f-empty">
+          <p>该 {category.name} 的内容正在整理中，敬请期待。</p>
+          <p class="f-muted">需要优先覆盖此话题？联系我们定制内容策略。</p>
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  .f-cat-hero { max-width: 720px; margin-bottom: 2.5rem; }
+  .f-back { color: #4ea1ff; font-size: .9rem; text-decoration: none; }
+  .f-cat-hero .bs-h2 { margin: .5rem 0 .5rem; }
+  .f-article-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+  .f-article-card { display: block; padding: 1.5rem; background: #121212; border: 1px solid #2F2F31; border-radius: 14px; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
+  .f-article-card:hover { border-color: #4ea1ff; transform: translateY(-3px); }
+  .f-article-card h2 { margin: 0 0 .5rem; font-size: 1.15rem; color: #fff; }
+  .f-article-card p { margin: 0 0 1rem; color: #9f9f9f; font-size: .92rem; line-height: 1.6; }
+  .f-read { color: #4ea1ff; font-size: .88rem; font-weight: 600; }
+  .f-empty { padding: 2rem; background: #121212; border: 1px dashed #2F2F31; border-radius: 14px; color: #cfcfcf; }
+  .f-empty .f-muted { color: #5f5f5f; font-size: .9rem; margin-top: .5rem; }
+</style>

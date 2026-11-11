@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import { PILLARS, getPillar } from '../../data/taxonomy'
+import globalSettings from '../../data/global_settings.json'
+const base = globalSettings.base_url
+
+export async function getStaticPaths() {
+  return PILLARS.map((p) => ({ params: { f: p.slug }, props: { pillar: p } }))
+}
+
+const { pillar } = Astro.props
+const title = `${pillar.name} · ${pillar.cn} | 5F GEO`
+const description = pillar.blurb
+const crumbs = [{ name: 'Home', url: '/' }, { name: `${pillar.name} ${pillar.cn}`, url: `/${pillar.slug}/` }]
+
+const guides = await getCollection('guides')
+const topicsByCat = (catSlug: string) =>
+  guides
+    .filter((g) => g.data.f === pillar.slug && g.data.category === catSlug)
+    .sort((a, b) => a.data.order - b.data.order)
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="canonical" href={`${base}/${pillar.slug}/`} />
+    <link rel="alternate" hreflang="en" href={`${base}/${pillar.slug}/`} />
+    <link rel="alternate" hreflang="x-default" href={`${base}/${pillar.slug}/`} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({
+        '@type': 'ListItem', position: i + 1,
+        name: c.name, item: base + c.url,
+      })),
+    })} />
+  </Fragment>
+
+  <main class="bs-container bs-mt-lg">
+    <nav class="f-breadcrumb" aria-label="breadcrumb">
+      {crumbs.map((c, i) => (<span>{i > 0 && ' / '}<a href={c.url}>{c.name}</a></span>))}
+    </nav>
+
+    <header class="f-pillar-hero">
+      <span class="f-pillar-tag">{pillar.tagline}</span>
+      <h1 class="bs-h2">{pillar.name} <span class="f-cn">{pillar.cn}</span></h1>
+      <p class="f-blurb">{pillar.blurb}</p>
+    </header>
+
+    <section class="f-cat-grid">
+      {pillar.categories.map((cat) => (
+        <article class="f-cat-card">
+          <a href={`/${pillar.slug}/${cat.slug}/`} class="f-cat-link">
+            <h2 class="f-cat-name">{cat.name}</h2>
+            <p class="f-cat-blurb">{cat.blurb}</p>
+            <ul class="f-topic-list">
+              {topicsByCat(cat.slug).map((t) => (
+                <li><a href={`/${pillar.slug}/${cat.slug}/${t.id.split('/')[2]}/`}>{t.data.title}</a></li>
+              ))}
+              {topicsByCat(cat.slug).length === 0 && <li class="f-muted">内容整理中…</li>}
+            </ul>
+            <span class="f-cat-cta">进入类目 →</span>
+          </a>
+        </article>
+      ))}
+    </section>
+
+    <section class="f-cta">
+      <h2>把 {pillar.name} 体系落到你的业务</h2>
+      <p>预约一次 5F 系统拆解，获取定制化的数字化外贸获客方案。</p>
+      <button class="bs-btn" onclick="demo.showModal()">获取增长方案</button>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  .f-breadcrumb { font-size: .85rem; color: #9f9f9f; margin-bottom: 1.5rem; }
+  .f-breadcrumb a { color: #9f9f9f; }
+  .f-breadcrumb a:hover { color: #4ea1ff; }
+  .f-pillar-hero { max-width: 760px; margin-bottom: 3rem; }
+  .f-pillar-tag { display:inline-block; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:#4ea1ff; border:1px solid #2F2F31; border-radius:999px; padding:.25rem .8rem; margin-bottom:1rem; }
+  .f-pillar-hero .bs-h2 { margin: 0 0 .75rem; }
+  .f-cn { color: #9f9f9f; font-weight: 400; font-size: .6em; }
+  .f-blurb { color: #cfcfcf; font-size: 1.05rem; line-height: 1.7; }
+  .f-cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .f-cat-card { background: #121212; border: 1px solid #2F2F31; border-radius: 16px; transition: border-color .2s, transform .2s; }
+  .f-cat-card:hover { border-color: #4ea1ff; transform: translateY(-3px); }
+  .f-cat-link { display: block; padding: 1.5rem; text-decoration: none; color: inherit; }
+  .f-cat-name { margin: 0 0 .5rem; font-size: 1.2rem; color: #fff; }
+  .f-cat-blurb { margin: 0 0 1rem; color: #9f9f9f; font-size: .92rem; line-height: 1.6; }
+  .f-topic-list { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
+  .f-topic-list a { color: #cfcfcf; font-size: .92rem; text-decoration: none; }
+  .f-topic-list a:hover { color: #4ea1ff; }
+  .f-muted { color: #5f5f5f; font-size: .88rem; }
+  .f-cat-cta { color: #4ea1ff; font-size: .9rem; font-weight: 600; }
+  .f-cta { margin-top: 3.5rem; padding: 2.5rem; background: linear-gradient(135deg,#121212,#1a1a1f); border:1px solid #2F2F31; border-radius: 18px; text-align: center; }
+  .f-cta h2 { margin: 0 0 .5rem; color: #fff; }
+  .f-cta p { color: #9f9f9f; margin: 0 0 1.25rem; }
+</style>
