@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Acoustic3D from '../components/Acoustic3D.astro';
+import FaqSection from '../components/FaqSection.astro';
+
+const title = 'Acoustic Instruments 3D Explorer — Interactive Exploded View';
+const description = 'Interactive 3D exploded view of an acoustic camera (microphone array) and a sound level meter: see inside the hardware, beamforming sensors and measurement chain before you request a quote.';
+const canonical = 'https://5fgeo.com/3d-acoustic-explorer/';
+
+const faq = [
+  { question: 'What is an acoustic camera used for?', answer: '<p>An acoustic camera locates and visualises sound sources by combining dozens of microphones in an array with beamforming algorithms. It overlays a colour "sound map" on a video image, so engineers can see exactly where noise or leaks come from — on machinery, vehicles, buildings or in the field.</p>' },
+  { question: 'How many microphones does an acoustic array need?', answer: '<p>Typical handheld or panel arrays carry 64 to 144 MEMS microphones. More channels improve spatial resolution and the lowest frequency that can be localised. The array on this explorer shows a 121-element grid, a common mid-range configuration.</p>' },
+  { question: 'What is the difference between a sound level meter and an acoustic camera?', answer: '<p>A sound level meter measures how loud a source is at a point (SPL, with time and frequency weighting) and is the instrument referenced by noise regulations. An acoustic camera adds a spatial dimension — it tells you where the sound comes from, not just how loud it is.</p>' },
+  { question: 'What is a Class 1 measurement microphone?', answer: '<p>Class 1 is the tighter of the two IEC 61672 accuracy classes for sound measuring instruments. A Class 1 mic has the smallest permitted tolerance across frequency and temperature, which is what makes a reading defensible in compliance and product-development work.</p>' },
+  { question: 'Why does the meter need a windscreen?', answer: '<p>At low frequencies wind and breath turbulence at the capsule create pressure fluctuations that masquerade as noise. A porous foam windscreen breaks up that turbulence before it reaches the microphone, so outdoor and in-field measurements stay accurate.</p>' },
+  { question: 'Can the 3D model be embedded on our own product page?', answer: '<p>Yes. The explorer is a self-contained WebGL module loaded on demand, with a lightweight SVG schematic as the first paint. It drops into any static site and can be retuned to your exact product geometry, colours and part labels.</p>' },
+  { question: 'How is the 3D model built — do you need our CAD files?', answer: '<p>The prototype on this page is built procedurally from code (no external model files), which is why it can be turned around fast. For a production version matched to your real product, CAD or measured dimensions let us reproduce the exact enclosure, array layout and internal parts.</p>' },
+  { question: 'What does a typical acoustic-instrument project include?', answer: '<p>From a 3D product explorer to a full site: interactive model, exploded-view animations, technical copy for SEO/GEO, and — where relevant — the instrument data sheets, calibration scope and support terms. Tell us the product and we scope it back.</p>' },
+];
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <!-- three.js via importmap + CDN; no npm dependency. Must precede module scripts. -->
+    <script type="importmap" is:inline>
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+  </Fragment>
+
+  <div class="bs-container bs-mt-lg ac-page">
+
+    <!-- ===== HERO ===== -->
+    <section class="ac-hero">
+      <h1>Acoustic Instruments — Interactive 3D Exploded View</h1>
+      <p class="sub">See inside the hardware before you ask for a quote. An acoustic camera (microphone array) and a sound level meter, rendered as interactive exploded models you can rotate, take apart and label.</p>
+      <div class="ac-cta-row">
+        <a class="bs-btn ac-cta-primary" href="#explorer">Explore in 3D</a>
+        <button class="bs-btn" type="button" onclick="demo.showModal()">Request a demo build</button>
+      </div>
+    </section>
+
+    <!-- ===== 3D BLOCK ===== -->
+    <section id="explorer" class="ac-block">
+      <h2>3D Exploded Explorer</h2>
+      <p class="ac-lead">The first view is a plain schematic (loads instantly, works everywhere). Press <strong>Launch interactive 3D view</strong> to load the WebGL model — it streams in only on request. Drag to rotate, use the explode slider to take the product apart.</p>
+      <Acoustic3D />
+    </section>
+
+    <!-- ===== ACOUSTIC CAMERA ===== -->
+    <section class="ac-block">
+      <h2>What an acoustic camera is</h2>
+      <p>
+        An acoustic camera is a sensor array, not a single lens. Dozens of microphones sit on a panel and sample
+        the same sound wave a fraction of a second apart; beamforming software then works out, for every direction,
+        how the signals add up. The result is a "sound map" — a cloud of colour pinned to the exact spots that are
+        loud — overlaid on a normal video image. Engineers use it to find noise sources on machinery, leaks in
+        compressed-air systems, cavitation in pumps, or squeaks in a vehicle, without guessing.
+      </p>
+      <p>
+        The array is the product's heart. The 121-element grid shown here is a typical mid-range layout; more
+        microphones sharpen the resolution and lower the frequency you can still localise. Behind the array sit the
+        PCB/DSP that runs the beamforming, a sealed rear housing, a display for the live map, and a handle for
+        hand-held surveys.
+      </p>
+    </section>
+
+    <!-- ===== SOUND LEVEL METER ===== -->
+    <section class="ac-block">
+      <h2>What a sound level meter is</h2>
+      <p>
+        A sound level meter does one job precisely: measure how loud something is, in a way a regulator will accept.
+        A Class 1 measurement microphone at the top converts pressure into a signal; a windscreen keeps wind and
+        breath from masquerading as noise; and the body holds the display, keypad, processing and a rechargeable
+        battery. Time and frequency weighting turn the raw signal into the dB(A), dB(C) and octave-band readings
+        that noise standards reference.
+      </p>
+      <p>
+        Where the acoustic camera answers <em>where</em> the sound comes from, the meter answers <em>how loud</em>.
+        Together they are the two instruments most acoustic, NVH and environmental-noise teams reach for — which is
+        why both are modelled here.
+      </p>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <FaqSection title="Frequently asked questions" faq={faq} />
+
+    <!-- ===== QUOTE CTA ===== -->
+    <section class="ac-block ac-cta-block">
+      <h2>Want this on your product page?</h2>
+      <p>The explorer above is a working prototype. Send us your product and we will scope a version matched to your real geometry, colours and part names.</p>
+      <button class="bs-btn ac-cta-primary" type="button" onclick="demo.showModal()">Request a demo build</button>
+    </section>
+
+    <!-- ===== related ===== -->
+    <section class="ac-block ac-related">
+      <p>More interactive 3D explorers: <a href="/3d-polyester-line/">PET production line 3D explorer</a>. <a href="/">Back to home</a>.</p>
+    </section>
+
+    <!-- ===== JSON-LD ===== -->
+    <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Interactive 3D Product Explorer for Acoustic Instruments",
+          "serviceType": "WebGL product visualisation and exploded-view development",
+          "provider": { "@type": "Organization", "name": "ECHO 5F" },
+          "url": "https://5fgeo.com/3d-acoustic-explorer/"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "What is an acoustic camera used for?", "acceptedAnswer": { "@type": "Answer", "text": "An acoustic camera locates and visualises sound sources by combining dozens of microphones in an array with beamforming, overlaying a colour sound map on a video image." } },
+            { "@type": "Question", "name": "How many microphones does an acoustic array need?", "acceptedAnswer": { "@type": "Answer", "text": "Typical arrays carry 64 to 144 MEMS microphones; more channels improve spatial resolution and the lowest localisable frequency." } },
+            { "@type": "Question", "name": "What is the difference between a sound level meter and an acoustic camera?", "acceptedAnswer": { "@type": "Answer", "text": "A sound level meter measures loudness at a point (SPL with weighting); an acoustic camera adds the spatial dimension of where the sound comes from." } },
+            { "@type": "Question", "name": "What is a Class 1 measurement microphone?", "acceptedAnswer": { "@type": "Answer", "text": "Class 1 is the tighter IEC 61672 accuracy class, with the smallest permitted tolerance across frequency and temperature, making readings defensible." } },
+            { "@type": "Question", "name": "Can the 3D model be embedded on our own product page?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — it is a self-contained WebGL module loaded on demand with an SVG schematic first paint, droppable into any static site." } },
+            { "@type": "Question", "name": "Do you need our CAD files to build the model?", "acceptedAnswer": { "@type": "Answer", "text": "The prototype is procedural (no external files) for speed; CAD or measured dimensions let us match the exact product for production." } }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://5fgeo.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Acoustic Instruments 3D Explorer", "item": "https://5fgeo.com/3d-acoustic-explorer/" }
+          ]
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Acoustic Instruments 3D Explorer",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Any (WebGL)",
+          "url": "https://5fgeo.com/3d-acoustic-explorer/"
+        },
+        {
+          "@type": "Organization",
+          "name": "ECHO 5F",
+          "url": "https://5fgeo.com/"
+        }
+      ]
+    }
+    </script>
+  </div>
+</Layout>
+
+<style>
+  .ac-page { color: #e6edf3; }
+  .ac-hero { padding: 8px 0 4px; }
+  .ac-hero h1 { font-size: 30px; line-height: 1.25; margin: 0 0 12px; color: #e6edf3; }
+  .ac-hero .sub { color: #9aa4b2; font-size: 17px; max-width: 760px; margin: 0 0 18px; }
+  .ac-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .ac-cta-primary { background: #4ea1ff; color: #06121f; }
+  .ac-cta-primary:hover { background: #6fb4ff; }
+  .ac-block { padding: 30px 0; border-top: 1px solid #2a313c; }
+  .ac-block h2 { font-size: 23px; margin: 0 0 10px; color: #e6edf3; }
+  .ac-lead { color: #9aa4b2; max-width: 820px; }
+  .ac-block p { color: #cdd6e0; max-width: 860px; line-height: 1.7; }
+  .ac-block p em { color: #e6edf3; font-style: italic; }
+  .ac-cta-block { text-align: center; }
+  .ac-related { border-top: 1px solid #2a313c; }
+  .ac-related a { color: #4ea1ff; }
+  @media (max-width: 720px) {
+    .ac-hero h1 { font-size: 24px; }
+  }
+</style>

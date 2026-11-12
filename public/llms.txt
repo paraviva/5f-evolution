@@ -1,0 +1,6 @@
+# 5fgeo.com — llms.txt
+# A plain-text map of this site for LLMs and AI engines.
+
+- / : ECHO 5F — web, SEO/GEO and interactive 3D product visualisation studio.
+- /3d-polyester-line/ : interactive 3D explorer of an 8-stage PET (polyester) production line, with capacity matrix and turnkey scope.
+- /3d-acoustic-explorer/ : interactive 3D exploded view of an acoustic camera (121-element microphone array) and a sound level meter, with part labels and rotate/explode controls.

@@ -1,0 +1,177 @@
+---
+// Acoustic3D.astro — canvas shell, SVG fallback, control panel, lead layer, HUD.
+// 3D is mounted on demand (Launch button) via dynamic import of /js/acoustic-3d.js.
+---
+<div class="ac3d" id="ac3d">
+  <!-- 1) SVG fallback (first paint, no WebGL) -->
+  <div class="ac-pfd" data-ac-pfd aria-label="Acoustic instrument schematic">
+    <svg viewBox="0 0 960 320" preserveAspectRatio="xMidYMid meet" role="img">
+      <defs>
+        <marker id="ac-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#9aa4b2"></path>
+        </marker>
+      </defs>
+      <g font-size="12" fill="#e6edf3" text-anchor="middle" font-family="system-ui,sans-serif">
+        <!-- Acoustic camera -->
+        <rect x="70" y="60" width="180" height="180" rx="10" fill="#1b2230" stroke="#3a4452"></rect>
+        <g fill="#9aa4b2">
+          <circle cx="110" cy="100" r="5"></circle><circle cx="150" cy="100" r="5"></circle><circle cx="190" cy="100" r="5"></circle>
+          <circle cx="110" cy="140" r="5"></circle><circle cx="150" cy="140" r="5"></circle><circle cx="190" cy="140" r="5"></circle>
+          <circle cx="110" cy="180" r="5"></circle><circle cx="150" cy="180" r="5"></circle><circle cx="190" cy="180" r="5"></circle>
+        </g>
+        <text x="160" y="270">Acoustic Camera (mic array)</text>
+        <!-- arrow -->
+        <line x1="270" y1="150" x2="430" y2="150" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#ac-arrow)"></line>
+        <!-- Sound level meter -->
+        <rect x="470" y="50" width="80" height="220" rx="10" fill="#1b2230" stroke="#3a4452"></rect>
+        <rect x="490" y="20" width="40" height="40" rx="6" fill="#2a2f37" stroke="#3a4452"></rect>
+        <rect x="486" y="90" width="48" height="60" rx="4" fill="#0a1622" stroke="#3a4452"></rect>
+        <text x="510" y="295">Sound Level Meter</text>
+        <text x="480" y="318" fill="#9aa4b2" font-size="10">Static preview · launch 3D for the exploded view</text>
+      </g>
+    </svg>
+    <p class="ac-pfd-note">Schematic preview. Press <strong>Launch interactive 3D view</strong> to load the WebGL model — sound-wave ripples, a flowing energy field, and an on-demand exploded view that plays like a video. Streams in only on request.</p>
+  </div>
+
+  <!-- 2) WebGL stage (hidden until launch) -->
+  <div class="ac-stage" data-ac-stage hidden>
+    <canvas data-ac-canvas></canvas>
+    <div class="ac-labels" data-ac-labels></div>
+    <div class="ac-hud" data-ac-hud hidden></div>
+  </div>
+
+  <!-- 3) Launch -->
+  <div class="ac-launch">
+    <button type="button" data-ac-launch class="ac-btn-primary">Launch interactive 3D view</button>
+  </div>
+
+  <!-- 4) Control panel (hidden until launch) -->
+  <div class="ac-panel" data-ac-panel hidden>
+    <div class="ac-row">
+      <button type="button" class="ac-btn-primary" data-ctl="explode-toggle">Explode view ▶</button>
+      <span class="ac-field">Product</span>
+      <button type="button" class="ac-chip" data-ac-product="camera">Acoustic Camera</button>
+      <button type="button" class="ac-chip" data-ac-product="meter">Sound Level Meter</button>
+    </div>
+    <div class="ac-row">
+      <label class="ac-switch"><input type="checkbox" data-ctl="autorotate" checked /> Auto-rotate</label>
+      <label class="ac-switch"><input type="checkbox" data-ctl="labels" checked /> Part labels</label>
+      <button type="button" class="ac-btn" data-ctl="reset">Reset view</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function () {
+  const root = document.getElementById('ac3d');
+  if (!root) return;
+  const launchBtn = root.querySelector('[data-ac-launch]');
+  const stage = root.querySelector('[data-ac-stage]');
+  const pfd = root.querySelector('[data-ac-pfd]');
+  const panel = root.querySelector('[data-ac-panel]');
+  const hud = root.querySelector('[data-ac-hud]');
+  let api = null;
+
+  function supportsWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) { return false; }
+  }
+
+  launchBtn.addEventListener('click', async () => {
+    if (!supportsWebGL()) {
+      launchBtn.textContent = '3D not available on this device — showing the schematic';
+      launchBtn.disabled = true;
+      return;
+    }
+    launchBtn.disabled = true;
+    launchBtn.textContent = 'Loading 3D…';
+    try {
+      const mod = await import('/js/acoustic-3d.js');
+      api = mod.mountAcoustic3D(stage, {});
+      pfd.hidden = true;
+      stage.hidden = false;
+      panel.hidden = false;
+      launchBtn.hidden = true;
+      if (hud) hud.hidden = false;
+      wire(api);
+    } catch (e) {
+      console.error(e);
+      launchBtn.textContent = 'Failed to load 3D (' + (e && e.message ? e.message : e) + ')';
+      launchBtn.disabled = false;
+    }
+  });
+
+  function wire(a) {
+    const q = (s) => root.querySelector(s);
+    const explodeBtn = q('[data-ctl="explode-toggle"]');
+    explodeBtn.addEventListener('click', () => {
+      const exploded = a.toggleExplode();
+      explodeBtn.textContent = exploded ? 'Assemble view ◀' : 'Explode view ▶';
+    });
+    q('[data-ctl="autorotate"]').addEventListener('change', (e) => a.setAutoRotate(e.target.checked));
+    q('[data-ctl="labels"]').addEventListener('change', (e) => a.setLabels(e.target.checked));
+    q('[data-ctl="reset"]').addEventListener('click', () => {
+      a.reset();
+      explodeBtn.textContent = 'Explode view ▶';
+    });
+    root.querySelectorAll('[data-ac-product]').forEach((b) => b.addEventListener('click', () => a.setProduct(b.dataset.acProduct)));
+  }
+})();
+</script>
+
+<style is:global>
+  .ac3d { width: 100%; }
+  [hidden] { display: none !important; }
+  .ac-pfd {
+    background: #11161d; border: 1px solid #2a313c; border-radius: 12px;
+    padding: 14px; margin-bottom: 14px;
+  }
+  .ac-pfd svg { width: 100%; height: auto; display: block; }
+  .ac-pfd-note { color: #9aa4b2; font-size: 13px; margin: 8px 2px 0; }
+  .ac-stage {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 620px;
+    background: #0e1116; border: 1px solid #2a313c; border-radius: 12px; overflow: hidden;
+  }
+  .ac-stage canvas { display: block; width: 100%; height: 100%; }
+  .ac-labels { position: absolute; inset: 0; pointer-events: none; }
+  .ac-label {
+    position: absolute; top: 0; left: 0; will-change: transform; pointer-events: none;
+    background: rgba(11,14,19,.7); border: 1px solid rgba(95,208,255,.35); border-radius: 7px;
+    padding: 3px 8px; min-width: 96px; text-align: center; backdrop-filter: blur(2px);
+    transition: opacity .25s ease;
+  }
+  .ac-label b { display: block; font-size: 11px; letter-spacing: .3px; color: #eaf4ff; }
+  .ac-label small { display: block; font-size: 9.5px; color: #8fb8d6; }
+  .ac-hud {
+    position: absolute; top: 10px; right: 10px; font-size: 11px; color: #9aa4b2;
+    background: rgba(16,21,28,.7); border: 1px solid #2a313c; border-radius: 6px; padding: 3px 8px;
+  }
+  .ac-launch { margin: 12px 0; }
+  .ac-btn-primary {
+    background: #4ea1ff; color: #06121f; border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .ac-btn-primary:disabled { background: #2a313c; color: #9aa4b2; cursor: default; }
+  .ac-panel { border: 1px solid #2a313c; border-radius: 12px; padding: 14px; margin-top: 6px; background: #11161d; }
+  .ac-row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-bottom: 10px; }
+  .ac-row:last-child { margin-bottom: 0; }
+  .ac-switch { font-size: 13px; color: #cdd6e0; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .ac-field { font-size: 13px; color: #cdd6e0; display: inline-flex; align-items: center; gap: 8px; }
+  .ac-field input[type="range"] { accent-color: #4ea1ff; width: 160px; }
+  .ac-chip {
+    background: #1b2230; color: #cdd6e0; border: 1px solid #3a4452; border-radius: 999px;
+    padding: 5px 14px; font-size: 12px; cursor: pointer;
+  }
+  .ac-chip:hover { border-color: #4ea1ff; color: #fff; }
+  .ac-btn {
+    background: #1b2230; color: #e6edf3; border: 1px solid #3a4452; border-radius: 8px;
+    padding: 8px 16px; font-size: 13px; cursor: pointer;
+  }
+  .ac-btn:hover { border-color: #4ea1ff; }
+  @media (max-width: 640px) {
+    .ac-panel { font-size: 12px; }
+    .ac-field input[type="range"] { width: 120px; }
+  }
+</style>
